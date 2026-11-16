@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnowledgeMap — Твоя карта знаний</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ГЛАВНЫЙ ЭКРАН (ЛЕНДИНГ) -->
+    <div id="screen-landing" class="screen active">
+        <header class="navbar">
+            <div class="logo">K<span>M</span></div>
+            <nav class="nav-links">
+                <a href="#how-it-works">Как это работает</a>
+                <a href="#features">Возможности</a>
+                <a href="#stats">Результаты</a>
+            </nav>
+            <div class="nav-actions" id="nav-actions">
+                <!-- JS заполнит это -->
+            </div>
+        </header>
+        
+        <main class="hero">
+            <div class="hero-content">
+                <span class="script-text">Привет, я твой</span>
+                <h1>ЛИЧНЫЙ<br>ИИ-РЕПЕТИТОР</h1>
+                <p class="subtitle">Загружай конспекты, получай готовые карточки и проходи квизы. Учись быстрее с интервальным повторением.</p>
+                <button class="primary-btn large" onclick="navigate('auth')">Попробовать бесплатно</button>
+            </div>
+            <div class="hero-image-wrapper">
+                <!-- ВАША ГЛАВНАЯ КАРТИНКА -->
+                <img src="hero-img.jpg" alt="Студент" class="hero-img">
+                
+                <div class="floating-badge">
+                    <span class="icon">✨</span>
+                    <div>
+                        <strong>ИИ генерация</strong>
+                        <p>за 10 секунд</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Статистика -->
+        <section id="stats" class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-num">50K+</span>
+                <span class="stat-desc">Создано карточек</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">99%</span>
+                <span class="stat-desc">Точность ИИ</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">12ч</span>
+                <span class="stat-desc">Экономия времени</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">8+</span>
+                <span class="stat-desc">Предметов</span>
+            </div>
+        </section>
+
+        <!-- Как это работает -->
+        <section id="how-it-works" class="section process-section">
+            <div class="section-header">
+                <span class="script-text">Процесс</span>
+                <h2>Как это работает</h2>
+            </div>
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-img-wrapper">
+                        <!-- ВАША КАРТИНКА 1 -->
+                        <img src="feature-1.jpg" alt="Загрузка">
+                    </div>
+                    <span class="step-num">01</span>
+                    <h3>Загрузите материал</h3>
+                    <p>Фото, PDF или просто текст. Мы распознаем всё.</p>
+                </div>
+                <div class="process-card">
+                    <div class="process-img-wrapper">
+                        <!-- ВАША КАРТИНКА 2 -->
+                        <img src="feature-2.jpg" alt="ИИ">
+                    </div>
+                    <span class="step-num">02</span>
+                    <h3>ИИ создает карту</h3>
+                    <p>Выделяем главное и строим связи между понятиями.</p>
+                </div>
+                <div class="process-card">
+                    <div class="process-img-wrapper">
+                        <!-- ВАША КАРТИНКА 3 -->
+                        <img src="feature-3.jpg" alt="Обучение">
+                    </div>
+                    <span class="step-num">03</span>
+                    <h3>Учитесь и запоминайте</h3>
+                    <p>Проходите квизы и повторяйте сложные темы.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Демо-блок -->
+        <section class="demo-section">
+            <div class="demo-content">
+                <h2>Проверь свои знания прямо сейчас</h2>
+                <p>Это демо-вопрос из реального квиза по биологии.</p>
+            </div>
+            <div class="demo-card">
+                <div class="demo-question">
+                    <span class="badge">Демо</span>
+                    <h3>Какой органоид отвечает за синтез белка?</h3>
+                </div>
+                <div class="demo-options">
+                    <button onclick="alert('Неверно! Попробуй еще.')">Митохондрия</button>
+                    <button onclick="alert('Верно! Молодец 🎉')">Рибосома</button>
+                    <button onclick="alert('Неверно! Попробуй еще.')">Ядро</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Подвал -->
+        <footer class="footer">
+            <div class="footer-left">
+                <div class="logo">K<span>M</span></div>
+                <p>Твой путь к знаниям начинается здесь.</p>
+            </div>
+            <div class="footer-right">
+                <a href="#">Telegram</a>
+                <a href="#">Политика</a>
+                <a href="#">2026 © KnowledgeMap</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ЭКРАН АВТОРИЗАЦИИ -->
+    <div id="screen-auth" class="screen auth-bg">
+        <button class="back-btn fixed-back" onclick="navigate('landing')">← Назад</button>
+        <div class="auth-container">
+            <div class="auth-toggle">
+                <button id="tab-login" class="active" onclick="switchAuthTab('login')">Вход</button>
+                <button id="tab-register" onclick="switchAuthTab('register')">Регистрация</button>
+            </div>
+
+            <form id="form-login" class="auth-form" onsubmit="handleLogin(event)">
+                <h2>С возвращением</h2>
+                <div class="input-group">
+                    <label>Логин</label>
+                    <input type="text" id="login-username" placeholder="Введите логин" required>
+                </div>
+                <div class="input-group">
+                    <label>Пароль</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <p class="error-msg" id="login-error"></p>
+                <button type="submit" class="primary-btn full-width">Войти</button>
+            </form>
+
+            <form id="form-register" class="auth-form hidden" onsubmit="handleRegister(event)">
+                <h2>Создать аккаунт</h2>
+                <div class="input-group">
+                    <label>Никнейм</label>
+                    <input type="text" id="reg-nickname" placeholder="username" required>
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="reg-email" placeholder="you@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Пароль</label>
+                    <input type="password" id="reg-password" placeholder="Минимум 6 символов" required minlength="6">
+                </div>
+                <p class="error-msg" id="reg-error"></p>
+                <button type="submit" class="primary-btn full-width mt-20">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ГЛАВНАЯ (ДАШБОРД) -->
+    <div id="screen-dashboard" class="screen">
+        <header class="navbar">
+            <div class="logo">K<span>M</span></div>
+            <div class="nav-actions">
+                <button class="primary-btn small" onclick="navigate('create-set')">+ Создать</button>
+                <button class="avatar-btn" id="dashboard-avatar" onclick="navigate('profile')">U</button>
+            </div>
+        </header>
+
+        <div class="dashboard-layout">
+            <div class="dashboard-left">
+                <div class="section-header">
+                    <h2>Мои наборы</h2>
+                    <button class="text-btn" onclick="navigate('my-sets')">Смотреть все →</button>
+                </div>
+                <div class="mini-sets" id="dashboard-sets"></div>
+            </div>
+            
+            <div class="dashboard-right">
+                <div class="streak-card">
+                    <h3>Текущая серия</h3>
+                    <div class="days-row">
+                        <span>Пн</span><span>Вт</span><span>Ср</span><span class="active">Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+                    </div>
+                    <div class="streak-count">🔥 5 дней</div>
+                    <p class="text-muted">Рекорд: 10 дней</p>
+                </div>
+                
+                <div class="create-panel">
+                    <h3>Создать набор</h3>
+                    <div class="create-actions">
+                        <button class="action-card" onclick="navigate('create-set')">
+                            <span class="icon">📄</span>
+                            <div>
+                                <h4>Загрузить конспект</h4>
+                                <p>PDF, DOCX, фото</p>
+                            </div>
+                        </button>
+                        <button class="action-card" onclick="navigate('create-set')">
+                            <span class="icon">📝</span>
+                            <div>
+                                <h4>Вставить текст</h4>
+                                <p>Скопируйте текст</p>
+                            </div>
+                        </button>
+                        <button class="action-card" onclick="navigate('create-set')">
+                            <span class="icon">💡</span>
+                            <div>
+                                <h4>Описать тему</h4>
+                                <p>ИИ сгенерирует сам</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЛИЧНЫЙ КАБИНЕТ -->
+    <div id="screen-profile" class="screen">
+        <header class="navbar">
+            <div class="logo">K<span>M</span></div>
+            <div class="nav-actions">
+                <button class="text-btn" onclick="navigate('dashboard')">← На главную</button>
+                <button class="outline-btn small" onclick="showStreak()">🔥 Серия: 5</button>
+                <button class="outline-btn small" onclick="navigate('settings')">⚙️</button>
+                <button class="primary-btn small" onclick="logout()">Выйти</button>
+            </div>
+        </header>
+
+        <div class="dashboard-layout">
+            <aside class="profile-sidebar">
+                <div class="profile-header">
+                    <div class="avatar-large" id="profile-avatar">U</div>
+                    <h2 id="profile-nickname">User123</h2>
+                    <p class="profile-info">Изучаю историю и программирование</p>
+                </div>
+                
+                <div class="stats-container">
+                    <h3>Твоя статистика</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-val">12</span>
+                            <span class="stat-lbl">Квизов</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val">4ч</span>
+                            <span class="stat-lbl">Время</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val">5</span>
+                            <span class="stat-lbl">Дней подряд</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val">85%</span>
+                            <span class="stat-lbl">Успех</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="profile-main">
+                <div class="section-header">
+                    <h2>Последние квизы</h2>
+                    <button class="text-btn" onclick="navigate('my-sets')">Смотреть все →</button>
+                </div>
+                <div class="quiz-list" id="recent-quizzes"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ВСЕ НАБОРЫ -->
+    <div id="screen-my-sets" class="screen">
+        <header class="navbar">
+            <button class="back-btn" onclick="navigate('dashboard')">← Назад</button>
+            <div class="logo">Мои наборы</div>
+        </header>
+        <div class="sets-grid" id="all-sets-grid"></div>
+    </div>
+
+    <!-- СОЗДАНИЕ НАБОРА -->
+    <div id="screen-create-set" class="screen">
+        <header class="navbar">
+            <button class="back-btn" onclick="navigate('dashboard')">← Назад</button>
+            <div class="logo">Новый набор</div>
+        </header>
+        
+        <div class="create-container">
+            <div class="create-header">
+                <h1>Создайте материал</h1>
+                <p>Выберите удобный способ загрузки</p>
+            </div>
+
+            <div class="upload-grid">
+                <div class="upload-card">
+                    <div class="icon-large">📄</div>
+                    <h4>Загрузить файл</h4>
+                    <p>PDF, DOCX, JPG, PNG</p>
+                    <input type="file" id="file-upload" accept=".pdf,.docx,.jpg,.png" class="file-input">
+                </div>
+                <div class="upload-card">
+                    <div class="icon-large">📝</div>
+                    <h4>Вставить текст</h4>
+                    <textarea placeholder="Вставьте ваш конспект сюда..." id="text-input"></textarea>
+                </div>
+                <div class="upload-card">
+                    <div class="icon-large">💡</div>
+                    <h4>Описать тему</h4>
+                    <input type="text" placeholder="Например: Строение клетки" id="topic-input">
+                </div>
+            </div>
+            
+            <div class="settings-row">
+                <div class="setting-item">
+                    <label>Количество вопросов</label>
+                    <input type="number" id="q-count" value="10" min="1" max="50">
+                </div>
+                <div class="setting-item">
+                    <label>Сложность</label>
+                    <select id="difficulty">
+                        <option value="strict">Строго по тексту</option>
+                        <option value="extended">Выходить за рамки</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="primary-btn large full-width mt-20" onclick="generateQuiz()">Сгенерировать квиз</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН КВИЗА -->
+    <div id="screen-quiz" class="screen">
+        <header class="navbar">
+            <button class="back-btn" onclick="navigate('dashboard')">← Назад</button>
+            <div class="quiz-nav-info">
+                <h3 id="quiz-title">Тема квиза</h3>
+                <span id="quiz-count" class="badge">10 вопросов</span>
+            </div>
+        </header>
+
+        <div class="quiz-tabs-container">
+            <div class="quiz-tabs">
+                <button class="tab active" onclick="switchQuizTab('summary')">Конспект</button>
+                <button class="tab" onclick="switchQuizTab('cards')">Карточки</button>
+                <button class="tab" onclick="switchQuizTab('test')">Тест</button>
+                <button class="tab" onclick="switchQuizTab('results')">Результаты</button>
+            </div>
+        </div>
+
+        <div class="quiz-content">
+            <div id="tab-summary" class="tab-content active">
+                <div class="summary-card">
+                    <p>Здесь будет отображаться ваш конспект, распознанный ИИ...</p>
+                </div>
+            </div>
+
+            <div id="tab-cards" class="tab-content">
+                <div class="flashcard-container">
+                    <div class="flashcard" id="flashcard" onclick="flipCard()">
+                        <div class="card-face card-front">
+                            <span class="card-label">Вопрос</span>
+                            <p>Вопрос на карточке</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <span class="card-label">Ответ</span>
+                            <p>Ответ на вопрос</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-controls">
+                    <button class="outline-btn" onclick="flipCard()">Перевернуть</button>
+                    <button class="secondary-btn" onclick="nextCard(false)">Не знаю</button>
+                    <button class="primary-btn" onclick="nextCard(true)">Знаю</button>
+                </div>
+            </div>
+
+            <div id="tab-test" class="tab-content">
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="badge">Вопрос <span id="current-q-num">1</span></span>
+                    </div>
+                    <h3 id="question-text">Текст вопроса?</h3>
+                    <div class="options" id="options-container"></div>
+                    <button class="primary-btn full-width mt-20" onclick="nextQuestion()">Далее →</button>
+                </div>
+            </div>
+
+            <div id="tab-results" class="tab-content">
+                <div class="results-card">
+                    <div class="results-icon">🎉</div>
+                    <h2>Тест завершен!</h2>
+                    <p class="text-muted">Ваш результат</p>
+                    <div class="score-display"><span id="score">0</span> / 10</div>
+                    <button class="primary-btn full-width mt-20" onclick="navigate('dashboard')">На главную</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- НАСТРОЙКИ -->
+    <div id="screen-settings" class="screen">
+        <header class="navbar">
+            <button class="back-btn" onclick="navigate('profile')">← Назад</button>
+            <div class="logo">Настройки</div>
+        </header>
+        <div class="settings-container">
+            <h2>Профиль</h2>
+            <div class="input-group">
+                <label>Никнейм</label>
+                <input type="text" value="User123">
+            </div>
+            <h2 class="mt-20">Повторения</h2>
+            <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+                <span class="toggle-label">Включить интервальное повторение</span>
+            </label>
+            <button class="primary-btn mt-20">Сохранить изменения</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
