@@ -1,0 +1,1231 @@
+<title>Шалфей</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Layout: тихая шапка, одна колонка контента до 1080px, карточка — главный объект на каждом экране */
+:root{
+  --bg:#F1FAEE; --surface:#FAFDF8; --surface-2:#E4ECE1; --tint:#E3ECDD;
+  --line:#D8E2DC; --line-strong:#BFCDC3;
+  --ink:#344E41; --ink-strong:#22362B; --muted:#5E7367;
+  --accent:#588157; --accent-ink:#F1FAEE; --accent-soft:#A3B18A;
+  --good:#3F6E45; --good-soft:#DCE9D5; --bad:#A3513F; --bad-soft:#F4E3DD;
+  --shadow:0 1px 2px rgb(52 78 65 / .06), 0 14px 32px -18px rgb(52 78 65 / .28);
+  --f-display:'Literata', Georgia, 'Times New Roman', serif;
+  --f-ui:'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono:'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A15; --surface:#19231D; --surface-2:#223029; --tint:#22332A;
+    --line:#2A3830; --line-strong:#3A4C41;
+    --ink:#D8E2DC; --ink-strong:#F1FAEE; --muted:#93A499;
+    --accent:#A3B18A; --accent-ink:#142019; --accent-soft:#588157;
+    --good:#A9CB9C; --good-soft:#203629; --bad:#E0907F; --bad-soft:#3A2520;
+    --shadow:0 1px 2px rgb(0 0 0 / .3), 0 16px 36px -18px rgb(0 0 0 / .6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A15; --surface:#19231D; --surface-2:#223029; --tint:#22332A;
+  --line:#2A3830; --line-strong:#3A4C41;
+  --ink:#D8E2DC; --ink-strong:#F1FAEE; --muted:#93A499;
+  --accent:#A3B18A; --accent-ink:#142019; --accent-soft:#588157;
+  --good:#A9CB9C; --good-soft:#203629; --bad:#E0907F; --bad-soft:#3A2520;
+  --shadow:0 1px 2px rgb(0 0 0 / .3), 0 16px 36px -18px rgb(0 0 0 / .6);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--f-ui);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;color:var(--ink-strong);text-wrap:balance;margin:0;letter-spacing:-.012em}
+h2{font-size:26px;line-height:1.2}
+h3{font-size:19px;line-height:1.25}
+p{margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font:500 11.5px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.muted{color:var(--muted)}
+.lead{font-size:17px;line-height:1.6;color:var(--muted);max-width:54ch}
+.fine{font-size:13px;color:var(--muted)}
+.view{animation:enter .35s ease both}
+@keyframes enter{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 19px/1 var(--f-display);color:var(--ink-strong)}
+.brand svg{flex:none}
+.leaf-a{fill:var(--accent-soft)} .leaf-b{stroke:var(--ink-strong)}
+.nav{display:flex;gap:2px}
+.nav a{padding:8px 13px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:500;white-space:nowrap;transition:background .15s,color .15s}
+.nav a:hover{color:var(--ink-strong);background:var(--tint)}
+.nav a[aria-current="page"]{color:var(--ink-strong);background:var(--surface-2)}
+.top-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{width:38px;height:38px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--ink-strong);transition:background .15s}
+.icon-btn:hover{background:var(--tint)}
+.avatar{width:38px;height:38px;border-radius:999px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:600 13px/1 var(--f-ui);text-decoration:none;flex:none}
+.avatar[aria-current="page"]{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent-soft)}
+@media (max-width:720px){
+  .top-row{grid-template-columns:1fr auto;grid-template-areas:"brand actions" "nav nav";padding-block:10px 8px;row-gap:8px;min-height:0}
+  .brand{grid-area:brand}.top-actions{grid-area:actions}
+  .nav{grid-area:nav;overflow-x:auto;scrollbar-width:none;margin-left:-8px}
+  .nav::-webkit-scrollbar{display:none}
+}
+
+/* buttons & controls */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;border:1px solid transparent;font-weight:500;font-size:15px;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s,transform .1s}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:color-mix(in srgb,var(--accent) 86%,var(--ink-strong))}
+.btn.ghost{background:transparent;border-color:var(--line-strong);color:var(--ink-strong)}
+.btn.ghost:hover{background:var(--tint)}
+.btn.soft{background:var(--surface-2);color:var(--ink-strong)}
+.btn.soft:hover{background:var(--tint)}
+.btn.bad{background:var(--bad-soft);color:var(--bad)}
+.btn.sm{height:36px;padding:0 14px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn kbd{font:500 11px/1 var(--f-mono);padding:3px 6px;border-radius:5px;background:color-mix(in srgb,currentColor 14%,transparent)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.bar{height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.bar>span{display:block;height:100%;background:var(--accent);border-radius:inherit;transition:width .45s ease}
+.tag{align-self:flex-start;font:500 10.5px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;padding:6px 9px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+.notice{padding:12px 16px;border-radius:12px;background:var(--tint);color:var(--ink);font-size:14px;line-height:1.5}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center;padding-block:76px 64px}
+.hero h1{font-size:clamp(36px,5.4vw,58px);line-height:1.05;margin-block:16px 20px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero .row{margin-top:30px}
+.hero .fine{margin-top:16px}
+@media (max-width:860px){.hero{grid-template-columns:1fr;gap:44px;padding-block:44px 32px}}
+.demo{position:relative;width:100%;max-width:430px;justify-self:center;padding:14px 14px 0 0}
+.demo .stack{position:absolute;inset:14px 14px 0 0;border-radius:22px;border:1px solid var(--line);background:var(--surface-2)}
+.demo .stack.one{transform:rotate(-5deg) translate(-6px,6px)}
+.demo .stack.two{transform:rotate(3deg) translate(8px,-4px);background:var(--tint)}
+
+/* flip card */
+.flip{position:relative;perspective:1600px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.flip-inner{display:grid;transition:transform .6s cubic-bezier(.2,.75,.2,1);transform-style:preserve-3d}
+.flip.is-flipped .flip-inner{transform:rotateY(180deg)}
+.face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:26px 28px;display:flex;flex-direction:column;gap:18px;min-height:300px;min-width:0}
+.face.back{transform:rotateY(180deg);background:var(--tint);border-color:color-mix(in srgb,var(--accent-soft) 45%,var(--line))}
+.flip.is-flipped .front,.flip:not(.is-flipped) .back{pointer-events:none}
+.face-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.subj{font:500 10.5px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.prompt{font:500 clamp(22px,3.4vw,29px)/1.24 var(--f-display);color:var(--ink-strong);text-wrap:balance}
+.prompt.sm{font-size:16px;line-height:1.4;font-weight:400;color:var(--muted)}
+.answer{font:400 19px/1.5 var(--f-display);color:var(--ink-strong)}
+.answer b{font-weight:600}
+.formula{font:500 42px/1 var(--f-display);color:var(--accent);letter-spacing:.01em}
+.explain{color:var(--muted);font-size:15px;line-height:1.55}
+.hint{margin-top:auto;font-size:13px;color:var(--muted)}
+.verdict{font:600 13px/1 var(--f-ui);padding:7px 12px;border-radius:999px}
+.verdict.ok{background:var(--good-soft);color:var(--good)}
+.verdict.no{background:var(--bad-soft);color:var(--bad)}
+.options{display:grid;gap:10px;margin-top:auto}
+.options.tf{grid-template-columns:1fr 1fr}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:15px;line-height:1.4;transition:border-color .15s,background .15s;min-width:0}
+.opt:hover:not([disabled]){border-color:var(--accent-soft);background:var(--tint)}
+.opt kbd{flex:none;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font:500 12px/1 var(--f-mono);background:var(--surface-2);color:var(--muted)}
+.opt[disabled]{cursor:default}
+.opt.is-right{border-color:var(--good);background:var(--good-soft)}
+.opt.is-wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.is-right kbd,.opt.is-wrong kbd{background:transparent;color:inherit}
+
+/* sections */
+.section{padding-block:44px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.section-head a{font-size:14px;color:var(--muted)}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
+.steps li{counter-increment:s;border-top:1px solid var(--line-strong);padding-top:18px;display:flex;flex-direction:column;gap:8px}
+.steps li::before{content:counter(s,decimal-leading-zero);font:500 12px/1 var(--f-mono);color:var(--accent)}
+.steps p{color:var(--muted);max-width:34ch}
+.types{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.mini .prompt{font-size:18px}
+.mini .options{margin-top:4px;gap:6px}
+.mini .opt{padding:7px 10px;font-size:13px;cursor:default}
+.mini .opt kbd{width:20px;height:20px;font-size:11px}
+.mini p.desc{font-size:14px;color:var(--muted);margin-top:auto;padding-top:12px;border-top:1px dashed var(--line-strong)}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+
+/* deck tiles */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.tile{display:flex;flex-direction:column;gap:10px;padding:20px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);text-decoration:none;transition:border-color .15s,transform .15s;min-height:176px;min-width:0}
+.tile:hover{border-color:var(--accent-soft);transform:translateY(-2px)}
+.tile h3{font-size:20px}
+.tile .count{font-size:14px;color:var(--muted)}
+.tile .foot{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.tile .meta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tile.add{border-style:dashed;background:transparent;justify-content:center;gap:6px;color:var(--muted)}
+.tile.add b{font-weight:500;color:var(--ink-strong);font-size:16px}
+.plus{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;background:var(--surface-2);color:var(--ink-strong);margin-bottom:6px}
+
+/* page heads */
+.page-head{padding-block:44px 26px;display:flex;flex-direction:column;gap:12px}
+.page-head h1{font-size:clamp(30px,4.2vw,44px);line-height:1.1}
+.page-head.split{flex-direction:row;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+.search{position:relative;width:min(300px,100%)}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search input{padding-left:38px!important}
+.empty{padding:40px 0;color:var(--muted)}
+
+/* forms */
+input[type=text],input[type=email],input[type=search],select{height:42px;padding:0 12px;border-radius:10px;border:1px solid var(--line-strong);background:var(--bg);width:100%;min-width:0}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
+.field{display:flex;flex-direction:column;gap:8px}
+.label{font-size:13.5px;font-weight:500;color:var(--ink-strong)}
+.label-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.label-row output{font:500 13px var(--f-mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;border:1px solid var(--line-strong);cursor:pointer;font-size:14px;user-select:none;transition:background .15s,border-color .15s}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip:has(input:checked){background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.seg{display:inline-flex;padding:4px;background:var(--surface-2);border-radius:999px;gap:2px;flex-wrap:wrap}
+.seg label,.seg button{position:relative;border:0;background:transparent;padding:7px 15px;border-radius:999px;cursor:pointer;color:var(--muted);font-weight:500;font-size:14px;white-space:nowrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked),.seg button[aria-selected="true"]{background:var(--surface);color:var(--ink-strong);box-shadow:0 1px 2px rgb(0 0 0 / .1)}
+.seg label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:1px}
+
+/* upload */
+.upload{display:grid;grid-template-columns:1.35fr 1fr;gap:20px;align-items:start;padding-bottom:20px}
+@media (max-width:860px){.upload{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;min-width:0}
+.panel .seg{margin-bottom:16px}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;min-height:290px;border:1.5px dashed var(--line-strong);border-radius:16px;background:var(--bg);padding:28px 20px;cursor:pointer;transition:border-color .15s,background .15s}
+.drop:hover,.drop.is-over{border-color:var(--accent);background:var(--tint)}
+.drop b{font:500 20px/1.3 var(--f-display);color:var(--ink-strong)}
+.drop u{color:var(--accent);text-underline-offset:3px}
+.drop-icon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:var(--surface-2);color:var(--accent);margin-bottom:4px}
+.file-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:290px;border-radius:16px;background:var(--bg);border:1px solid var(--line);padding:24px;text-align:center}
+.file-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);width:100%;max-width:420px;text-align:left}
+.ext{flex:none;width:42px;height:42px;border-radius:10px;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font:600 10.5px/1 var(--f-mono);text-transform:uppercase}
+.file-row .name{flex:1;min-width:0}
+.file-row .name b{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-strong)}
+.file-row .name span{font-size:13px;color:var(--muted)}
+.x-btn{flex:none;width:32px;height:32px;border-radius:999px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
+.x-btn:hover{background:var(--surface-2);color:var(--ink-strong)}
+textarea{display:block;width:100%;min-height:290px;resize:vertical;padding:16px;border-radius:16px;border:1px solid var(--line-strong);background:var(--bg);line-height:1.6}
+.ta-foot{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:10px;font-variant-numeric:tabular-nums}
+.settings{display:flex;flex-direction:column;gap:22px}
+.settings .btn{width:100%}
+.process{max-width:560px;margin:0 auto;padding-block:56px 40px;display:flex;flex-direction:column;gap:22px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.stages li{display:flex;align-items:center;gap:12px;color:var(--muted);transition:color .2s}
+.stages li.done,.stages li.now{color:var(--ink-strong)}
+.dot{flex:none;width:22px;height:22px;border-radius:999px;border:1.5px solid var(--line-strong);display:grid;place-items:center;color:var(--accent-ink)}
+.stages li.done .dot{background:var(--accent);border-color:var(--accent)}
+.stages li.now .dot{border-color:var(--accent);border-top-color:transparent;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* deck page */
+.deck-head{padding-block:40px 28px;display:flex;flex-direction:column;gap:14px}
+.deck-head h1{font-size:clamp(32px,4.4vw,48px);line-height:1.08}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:14px;align-self:flex-start}
+.back-link:hover{color:var(--ink-strong)}
+.meta-line{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:14px}
+.progress-line{display:flex;align-items:center;gap:14px;max-width:440px}
+.progress-line .bar{flex:1}
+.progress-line span{font:500 13px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.card-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
+.card-list li{display:grid;grid-template-columns:150px minmax(0,1fr) minmax(0,1fr) 64px;gap:20px;padding-block:16px;border-bottom:1px solid var(--line);align-items:start}
+.card-list .q{font:500 16px/1.4 var(--f-display);color:var(--ink-strong)}
+.card-list .a{color:var(--muted);font-size:14px}
+@media (max-width:720px){.card-list li{grid-template-columns:1fr;gap:6px}}
+
+/* study */
+.study{max-width:680px;margin:0 auto;padding-block:26px 48px;display:flex;flex-direction:column;gap:18px}
+.study-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.study-top .back-link{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.counter{font:500 13px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+.study .face{min-height:380px}
+.study-controls{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;min-height:44px}
+.keys{text-align:center;font-size:12.5px;color:var(--muted)}
+@media (hover:none){.keys{display:none}}
+@media (max-width:480px){.face{padding:22px 20px}.options.tf{grid-template-columns:1fr}}
+.results{max-width:620px;margin:0 auto;padding-block:56px 40px;display:flex;flex-direction:column;gap:18px}
+.results .score{font:500 clamp(56px,10vw,84px)/1 var(--f-display);color:var(--ink-strong);font-variant-numeric:tabular-nums}
+.results .score small{font-size:.38em;color:var(--muted);font-weight:400}
+.missed{list-style:none;margin:8px 0 0;padding:0;border-top:1px solid var(--line)}
+.missed li{padding-block:14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.missed b{font:500 16px/1.4 var(--f-display);color:var(--ink-strong)}
+.missed span{font-size:14px;color:var(--muted)}
+
+/* profile */
+.profile-head{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-block:44px 28px}
+.profile-head .who{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.profile-head h1{font-size:clamp(28px,4vw,38px)}
+.avatar.lg{width:72px;height:72px;font-size:24px;font-family:var(--f-display)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.stat{background:var(--surface);padding:18px 20px;display:flex;flex-direction:column;gap:4px}
+.stat b{font:500 30px/1.1 var(--f-display);color:var(--ink-strong);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+.two{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;align-items:start;margin-top:20px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.panel h2{font-size:21px;margin-bottom:16px}
+.heat-wrap{overflow-x:auto;padding-bottom:4px}
+.heat{display:grid;grid-template-rows:repeat(7,13px);grid-auto-flow:column;grid-auto-columns:13px;gap:4px;width:max-content}
+.heat i{border-radius:3px;background:var(--surface-2)}
+[data-l="1"]{background:color-mix(in srgb,var(--accent) 28%,var(--surface-2))}
+[data-l="2"]{background:color-mix(in srgb,var(--accent) 52%,var(--surface-2))}
+[data-l="3"]{background:color-mix(in srgb,var(--accent) 76%,var(--surface-2))}
+[data-l="4"]{background:var(--accent)}
+.heat-legend{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);margin-top:12px}
+.heat-legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.deck-progress{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.deck-progress li{display:grid;grid-template-columns:minmax(0,1fr) 120px 40px;gap:12px;align-items:center}
+.deck-progress a{text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-strong)}
+.deck-progress a:hover{color:var(--accent)}
+.deck-progress span{font:500 12px var(--f-mono);color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.set-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.set-row:first-of-type{border-top:0;padding-top:0}
+.set-row .t{min-width:0;flex:1 1 180px}
+.set-row .t small{display:block;color:var(--muted);font-size:13px}
+.set-row select{width:auto}
+.switch{position:relative;width:44px;height:26px;flex:none}
+.switch input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:1}
+.switch span{position:absolute;inset:0;border-radius:999px;background:var(--line-strong);transition:background .2s}
+.switch span::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px rgb(0 0 0 / .25);transition:transform .2s}
+.switch input:checked+span{background:var(--accent)}
+.switch input:checked+span::after{transform:translateX(18px)}
+.switch input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+
+/* type picker */
+.type-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg)}
+.type-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 14px;padding:12px 14px;border-top:1px solid var(--line)}
+.type-row:first-child{border-top:0}
+.type-row.off .tname{opacity:.55}
+.tcheck{position:relative;display:flex;align-items:flex-start;gap:12px;cursor:pointer;min-width:0;flex:1 1 200px}
+.tcheck input{position:absolute;opacity:0;width:20px;height:20px;margin:0}
+.box{flex:none;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line-strong);display:grid;place-items:center;margin-top:1px;color:var(--accent-ink);background:var(--surface)}
+.tcheck input:checked+.box{background:var(--accent);border-color:var(--accent)}
+.tcheck input:checked+.box::after{content:"";width:9px;height:5px;border:2px solid currentColor;border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+.tcheck input:focus-visible+.box{outline:2px solid var(--accent);outline-offset:2px}
+.tname{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tname b{font-weight:500;color:var(--ink-strong)}
+.tname small{font-size:12.5px;color:var(--muted);line-height:1.4}
+.tctl{display:flex;align-items:center;gap:8px;flex:none}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface);height:36px}
+.stepper button{width:34px;height:100%;border:0;background:transparent;cursor:pointer;color:var(--ink-strong);font-size:17px;border-radius:999px}
+.stepper button:hover:not([disabled]){background:var(--tint)}
+.stepper input,.total-input{width:44px;height:100%;border:0;background:transparent;text-align:center;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;-moz-appearance:textfield;appearance:textfield;min-width:0}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button,.total-input::-webkit-outer-spin-button,.total-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.stepper [disabled]{opacity:.35;cursor:not-allowed}
+.of{font:500 12px var(--f-mono);color:var(--muted);min-width:42px}
+.total-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:12px 14px;border-top:1px solid var(--line-strong);background:var(--surface-2)}
+.total-input{width:76px;height:36px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface)}
+.st{font:500 11px/1.6 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:right}
+.st.ok{color:var(--good)} .st.no{color:var(--bad)}
+@media (max-width:720px){.st{text-align:left}}
+.col{display:flex;flex-direction:column;gap:20px;min-width:0}
+.goal{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.goal-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.goal-top b{font:500 22px var(--f-display);color:var(--ink-strong);font-variant-numeric:tabular-nums}
+.heat i.f{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.sessions{list-style:none;margin:0;padding:0}
+.sessions li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding-block:12px;border-top:1px solid var(--line)}
+.sessions li:first-child{border-top:0;padding-top:0}
+.sessions b{font-weight:500;color:var(--ink-strong);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sessions .sc{font:500 13px var(--f-mono);color:var(--ink-strong);text-align:right;font-variant-numeric:tabular-nums}
+.sessions small{font-size:12.5px;color:var(--muted)}
+.btn.armed{background:var(--bad);color:var(--surface)}
+
+/* footer & toast */
+.foot{margin-top:48px;border-top:1px solid var(--line)}
+.foot .wrap{padding-block:26px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink-strong);color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;z-index:50;box-shadow:var(--shadow);max-width:calc(100% - 32px);text-align:center}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#home" aria-label="Шалфей — на главную">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path class="leaf-a" d="M4.5 19.5C4.5 10.5 10.5 4 20 4c0 9.5-6.5 15.5-15.5 15.5z"/><path class="leaf-b" d="M4.5 19.5 14 10" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Шалфей
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#home" data-nav="home">Главная</a>
+      <a href="#library" data-nav="library">Мои колоды</a>
+      <a href="#upload" data-nav="upload">Загрузить конспект</a>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Сменить тему"></button>
+      <a class="avatar" id="topAvatar" href="#profile" data-nav="profile" aria-label="Личный кабинет">Я</a>
+    </div>
+  </div>
+</header>
+
+<main id="app" class="wrap"></main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Шалфей · макет интерфейса</span>
+    <span>Генерация карточек не подключена · статистика хранится в этом браузере</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- виды вопросов ---------- */
+const TYPES = ['def','choice','stmt','tf','yn'];
+const TYPE_LABEL = {def:'Определение',choice:'Выбор ответа',stmt:'Верное утверждение',tf:'Верно или неверно',yn:'Да или нет'};
+const TYPE_HINT = {
+  def:'«Момент силы — это…» Вспомните и переверните карточку',
+  choice:'Вопрос и четыре варианта, правильный один',
+  stmt:'Четыре утверждения, верно только одно',
+  tf:'Утверждение из конспекта: верно оно или нет',
+  yn:'Вопрос, на который отвечают «да» или «нет»'
+};
+
+/* ---------- встроенные колоды-примеры ---------- */
+const PHYSICS = [
+  {id:'p1',type:'def',q:'Момент силы — это…',a:'Физическая величина, равная произведению модуля силы на её плечо: M = F · d. Единица в СИ — ньютон-метр (Н·м).'},
+  {id:'p4',type:'def',q:'Момент инерции — это…',a:'Мера инертности тела при вращении вокруг оси. Для материальной точки I = m · r², единица — кг·м².'},
+  {id:'p8',type:'def',q:'Момент импульса — это…',a:'Величина L = I · ω, характеризующая вращение тела. Сохраняется, если суммарный момент внешних сил равен нулю.'},
+  {id:'p10',type:'def',q:'Угловая скорость — это…',a:'Величина ω = Δφ / Δt: на какой угол поворачивается тело за единицу времени. Единица — рад/с.'},
+  {id:'p11',type:'def',q:'Угловое ускорение — это…',a:'Величина ε = Δω / Δt: как быстро меняется угловая скорость. Единица — рад/с².'},
+  {id:'p2',type:'choice',q:'Плечо силы — это…',options:['Кратчайшее расстояние от оси вращения до линии действия силы','Расстояние от оси вращения до точки приложения силы','Длина рычага целиком','Расстояние между двумя приложенными силами'],correct:0,why:'Плечо измеряют по перпендикуляру, опущенному из оси вращения на линию действия силы.'},
+  {id:'p5',type:'choice',q:'В каких единицах СИ измеряется момент силы?',options:['Н·м','кг·м²','Н/м','Дж/с'],correct:0,why:'M = F · d: сила в ньютонах умножается на плечо в метрах.'},
+  {id:'p7',type:'choice',q:'Как записывается основное уравнение динамики вращательного движения?',options:['M = I · ε','F = m · a','p = m · v','M = F · v'],correct:0,why:'Это аналог второго закона Ньютона: момент силы равен моменту инерции, умноженному на угловое ускорение ε.'},
+  {id:'p12',type:'choice',q:'Как связаны линейная и угловая скорости точки на расстоянии r от оси?',options:['v = ω · r','v = ω / r','v = ω · r²','v = r / ω'],correct:0,why:'Чем дальше точка от оси, тем больший путь она проходит за тот же поворот.'},
+  {id:'p18',type:'stmt',q:'Выберите верное утверждение о моменте силы',options:['Момент силы равен нулю, если линия действия силы проходит через ось','Момент силы измеряется в джоулях','Момент силы не зависит от плеча','Момент силы не может быть отрицательным'],correct:0,why:'У такой силы плечо равно нулю, поэтому она не вращает тело.'},
+  {id:'p19',type:'stmt',q:'Выберите верное утверждение о моменте инерции',options:['Он зависит от положения оси вращения','Он одинаков у всех тел одной массы','Он измеряется в Н·м','Он равен нулю у неподвижного тела'],correct:0,why:'Момент инерции определяется тем, как масса распределена относительно выбранной оси.'},
+  {id:'p20',type:'stmt',q:'Выберите верное утверждение о равновесии рычага',options:['Рычаг в равновесии, если моменты сил по и против часовой стрелки равны','Рычаг в равновесии, только если силы с обеих сторон равны','Длина плеч не влияет на равновесие','Чем длиннее плечо, тем большая сила нужна для равновесия'],correct:0,why:'Это правило моментов: F₁ · d₁ = F₂ · d₂.'},
+  {id:'p21',type:'stmt',q:'Выберите верное утверждение о моменте импульса',options:['Он равен произведению момента инерции на угловую скорость','Он сохраняется даже при действии внешних моментов','Он измеряется в рад/с','Он не зависит от скорости вращения'],correct:0,why:'L = I · ω, и сохраняется он только при нулевом суммарном моменте внешних сил.'},
+  {id:'p3',type:'tf',q:'Если линия действия силы проходит через ось вращения, момент этой силы равен нулю.',truth:true,why:'Плечо такой силы равно нулю, значит и M = F · d = 0.'},
+  {id:'p6',type:'tf',q:'Тело на оси находится в равновесии, если сумма моментов всех сил относительно этой оси равна нулю.',truth:true,why:'Это правило моментов: моменты, вращающие по часовой стрелке и против неё, компенсируют друг друга.'},
+  {id:'p9',type:'tf',q:'Момент инерции тела не зависит от того, где проходит ось вращения.',truth:false,why:'Зависит: чем дальше масса от оси, тем больше момент инерции. Для параллельных осей это описывает теорема Штейнера.'},
+  {id:'p13',type:'tf',q:'Момент импульса замкнутой системы сохраняется.',truth:true,why:'Если суммарный момент внешних сил равен нулю, момент импульса системы не меняется.'},
+  {id:'p14',type:'yn',q:'Можно ли усилить вращающее действие силы, не меняя её величину?',yes:true,why:'Да: достаточно увеличить плечо — например, взять гаечный ключ подлиннее.'},
+  {id:'p15',type:'yn',q:'Уменьшится ли момент силы, если ту же силу приложить ближе к оси?',yes:true,why:'Да: плечо станет короче, а M = F · d.'},
+  {id:'p16',type:'yn',q:'Зависит ли момент инерции тела только от его массы?',yes:false,why:'Нет: важно ещё, как масса распределена относительно оси.'},
+  {id:'p17',type:'yn',q:'Вращается ли фигуристка быстрее, когда прижимает руки к телу?',yes:true,why:'Да: момент инерции уменьшается, а момент импульса L = I · ω сохраняется, поэтому ω растёт.'}
+];
+
+const BUILTIN = [
+  {id:'physics',title:'Динамика вращения',subject:'Физика',source:'Физика_10кл_глава4.pdf',cards:PHYSICS},
+  {id:'cell',title:'Строение клетки',subject:'Биология',source:'клетка_конспект.docx',cards:[
+    {id:'b1',type:'def',q:'Митохондрия — это…',a:'Двумембранный органоид, в котором идёт клеточное дыхание и синтезируется АТФ.'},
+    {id:'b4',type:'def',q:'Клеточная мембрана — это…',a:'Оболочка из двойного слоя липидов с белками. Отделяет клетку от среды и избирательно пропускает вещества.'},
+    {id:'b2',type:'choice',q:'Где в клетке синтезируется белок?',options:['На рибосомах','В лизосомах','В аппарате Гольджи','В вакуолях'],correct:0,why:'Рибосомы собирают белок из аминокислот по матрице иРНК.'},
+    {id:'b5',type:'choice',q:'Какой органоид есть в растительной клетке, но отсутствует в животной?',options:['Хлоропласт','Митохондрия','Рибосома','Ядро'],correct:0,why:'Хлоропласты содержат хлорофилл и отвечают за фотосинтез.'},
+    {id:'b6',type:'stmt',q:'Выберите верное утверждение о ядре',options:['В ядре хранится основная часть ДНК клетки','Ядро есть у всех клеток, включая бактерии','В ядре синтезируется АТФ','У растительных клеток нет ядра'],correct:0,why:'Ядро хранит наследственную информацию; у бактерий его нет, а АТФ синтезируют митохондрии.'},
+    {id:'b3',type:'tf',q:'У бактерий есть оформленное ядро.',truth:false,why:'Бактерии — прокариоты: их ДНК лежит прямо в цитоплазме, ядерной оболочки нет.'},
+    {id:'b7',type:'yn',q:'Есть ли у растительной клетки клеточная стенка?',yes:true,why:'Да, у растений она состоит из целлюлозы.'}
+  ]},
+  {id:'peter',title:'Реформы Петра I',subject:'История',source:'история_8кл.pdf',cards:[
+    {id:'h1',type:'def',q:'Табель о рангах — это…',a:'Закон 1722 года о порядке государственной службы: 14 классов (чинов) в военной, статской и придворной службе.'},
+    {id:'h2',type:'choice',q:'В каком году основан Санкт-Петербург?',options:['1703','1700','1712','1721'],correct:0,why:'Город заложили 16 (27) мая 1703 года на Заячьем острове.'},
+    {id:'h4',type:'choice',q:'Какие органы заменили приказы при Петре I?',options:['Коллегии','Министерства','Земские соборы','Губернии'],correct:0,why:'Коллегии учреждены в 1717–1721 годах; министерства появились позже, при Александре I.'},
+    {id:'h3',type:'tf',q:'Правительствующий сенат был учреждён Петром I в 1711 году.',truth:true,why:'Сенат создали перед Прутским походом как высший орган управления в отсутствие царя.'},
+    {id:'h5',type:'yn',q:'Был ли Пётр I первым российским императором?',yes:true,why:'Да, императорский титул он принял в 1721 году после победы в Северной войне.'}
+  ]},
+  {id:'logs',title:'Логарифмы',subject:'Алгебра',source:'фото_тетради.jpg',cards:[
+    {id:'a1',type:'def',q:'Логарифм числа b по основанию a — это…',a:'Показатель степени, в которую нужно возвести a, чтобы получить b: если aˣ = b, то x = logₐ b (a > 0, a ≠ 1, b > 0).'},
+    {id:'a2',type:'choice',q:'Чему равен log₂ 32?',options:['5','4','16','6'],correct:0,why:'2⁵ = 32.'},
+    {id:'a4',type:'choice',q:'Чему равен lg 1000?',options:['3','2','10','100'],correct:0,why:'lg — логарифм по основанию 10, а 10³ = 1000.'},
+    {id:'a5',type:'stmt',q:'Выберите верное утверждение о логарифмах',options:['logₐ a = 1','logₐ 1 = a','logₐ 0 = 0','log₂ 8 = 4'],correct:0,why:'a¹ = a, поэтому logₐ a = 1. А logₐ 1 = 0, логарифма нуля не существует.'},
+    {id:'a3',type:'tf',q:'logₐ(xy) = logₐx · logₐy',truth:false,why:'Логарифм произведения равен сумме логарифмов: logₐ(xy) = logₐx + logₐy.'}
+  ]},
+  {id:'english',title:'Present Perfect',subject:'Английский',source:'grammar_notes.md',cards:[
+    {id:'e1',type:'def',q:'Present Perfect образуется так…',a:'have / has + третья форма глагола (V3). Например: I have finished, she has seen.'},
+    {id:'e2',type:'choice',q:'She ___ to Paris twice.',options:['has been','have been','was','is'],correct:0,why:'Опыт к настоящему моменту без указания времени — Present Perfect; she → has.'},
+    {id:'e4',type:'choice',q:'Какое слово — типичный маркер Present Perfect?',options:['already','yesterday','ago','last week'],correct:0,why:'Already, just, yet, ever, never — маркеры Present Perfect; остальные требуют Past Simple.'},
+    {id:'e3',type:'tf',q:'Со словом yesterday используют Present Perfect.',truth:false,why:'Yesterday указывает на законченное время в прошлом, поэтому нужен Past Simple.'},
+    {id:'e5',type:'yn',q:'Можно ли сказать «I have seen him yesterday»?',yes:false,why:'Нет: с yesterday нужен Past Simple — I saw him yesterday.'}
+  ]}
+];
+const SUBJECTS = ['Физика','Математика','Алгебра','Геометрия','Биология','Химия','История','Обществознание','Литература','Английский','Информатика','Другое'];
+
+/* ---------- утилиты ---------- */
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function plural(n, one, few, many){const a=n%10,b=n%100;if(a===1&&b!==11)return one;if(a>=2&&a<=4&&(b<12||b>14))return few;return many;}
+const cardsWord = n => n + ' ' + plural(n,'карточка','карточки','карточек');
+const qWord = n => n + ' ' + plural(n,'вопрос','вопроса','вопросов');
+const pct = x => Math.round(x*100) + '%';
+const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+function fmtSize(b){return b<1024*1024 ? Math.max(1,Math.round(b/1024))+' КБ' : (b/1024/1024).toFixed(1).replace('.',',')+' МБ';}
+function dayKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+const todayKey = () => dayKey(new Date());
+function daysAgo(ts){const a=new Date(ts);a.setHours(0,0,0,0);const b=new Date();b.setHours(0,0,0,0);return Math.round((b-a)/864e5);}
+function rel(ts){const d=daysAgo(ts);if(d<=0)return 'сегодня';if(d===1)return 'вчера';if(d<7)return d+' '+plural(d,'день','дня','дней')+' назад';return new Date(ts).toLocaleDateString('ru-RU',{day:'numeric',month:'long'});}
+const hm = ts => new Date(ts).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let toastT;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},2800);}
+
+const ICON = {
+  sun:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>',
+  moon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>',
+  upload:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>',
+  plus:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  x:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  search:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>',
+  check:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  left:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>'
+};
+
+/* ---------- хранилище статистики (в браузере) ---------- */
+const STORE_KEY = 'shalfey-data-v1';
+function blankDB(){return {decks:[],cards:{},days:{},types:{},sessions:[],since:Date.now(),settings:{goal:20,shuffle:true,mistakes:true,remind:false,name:''}};}
+let storageOk = true;
+function loadDB(){
+  const b = blankDB();
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){ const d = JSON.parse(raw); return Object.assign(b, d, {settings:Object.assign(b.settings, d.settings||{})}); }
+  }catch(e){ storageOk=false; }
+  return b;
+}
+const DB = loadDB();
+function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(DB)); storageOk=true; }catch(e){ storageOk=false; } }
+save();
+
+const allDecks = () => DB.decks.concat(BUILTIN);
+const deckById = id => allDecks().find(d => d.id === id);
+const cardStat = c => DB.cards[c.id];
+
+function recordAnswer(c, ok){
+  const k = todayKey();
+  const day = DB.days[k] || (DB.days[k] = {n:0, ok:0}); day.n++; if(ok) day.ok++;
+  const cs = DB.cards[c.id] || (DB.cards[c.id] = {n:0, ok:0}); cs.n++; if(ok) cs.ok++; cs.last = ok; cs.at = Date.now();
+  const ts = DB.types[c.type] || (DB.types[c.type] = {n:0, ok:0}); ts.n++; if(ok) ts.ok++;
+  save();
+}
+function deckLearned(d){ return d.cards.filter(c => cardStat(c) && cardStat(c).last).length; }
+const deckProgress = d => d.cards.length ? deckLearned(d)/d.cards.length : 0;
+function deckLastAt(d){ let m=0; d.cards.forEach(c=>{const s=cardStat(c); if(s && s.at>m) m=s.at;}); return m; }
+function deckWhen(d){ const t=deckLastAt(d); if(t) return rel(t); return d.created ? 'создана '+rel(d.created) : 'не изучалась'; }
+function totals(){ let n=0, ok=0; Object.values(DB.days).forEach(d=>{n+=d.n; ok+=d.ok;}); return {n, ok}; }
+function streak(){
+  const d = new Date(); const has = k => DB.days[k] && DB.days[k].n>0;
+  if(!has(dayKey(d))) d.setDate(d.getDate()-1);
+  let s=0; while(has(dayKey(d))){ s++; d.setDate(d.getDate()-1); }
+  return s;
+}
+function initials(){ const n=(DB.settings.name||'').trim(); if(!n) return 'Я'; return n.split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
+function syncAvatar(){ $('#topAvatar').textContent = initials(); }
+syncAvatar();
+
+/* ---------- тема ---------- */
+const THEME_KEY = 'shalfey-theme';
+function themeChoice(){const a=document.documentElement.getAttribute('data-theme');return a==='dark'||a==='light'?a:'system';}
+function effectiveTheme(){const c=themeChoice();if(c!=='system')return c;return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+function setTheme(t){
+  const r=document.documentElement;
+  if(t==='system') r.removeAttribute('data-theme'); else r.setAttribute('data-theme',t);
+  try{ if(t==='system') localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY,t); }catch(e){}
+  syncTheme();
+}
+function syncTheme(){
+  const dark = effectiveTheme()==='dark', b=$('#themeBtn');
+  b.innerHTML = dark ? ICON.sun : ICON.moon;
+  b.setAttribute('aria-label', dark ? 'Включить светлую тему' : 'Включить тёмную тему');
+  b.title = b.getAttribute('aria-label');
+  document.querySelectorAll('input[name="theme"]').forEach(i => { i.checked = i.value===themeChoice(); });
+}
+$('#themeBtn').addEventListener('click', () => setTheme(effectiveTheme()==='dark' ? 'light' : 'dark'));
+try{ const st=localStorage.getItem(THEME_KEY); if(st==='dark'||st==='light') setTheme(st); else syncTheme(); }catch(e){ syncTheme(); }
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme);
+
+/* ---------- выбор видов вопросов и количества ---------- */
+const totalOf = st => TYPES.reduce((s,t)=>s+(st.on[t]?st.n[t]:0),0);
+function typeRows(st, maxOf, showOf){
+  return TYPES.filter(t=>maxOf(t)>0).map(t=>{
+    const on = st.on[t], dis = on ? '' : ' disabled';
+    return `<div class="type-row${on?'':' off'}" data-t="${t}">
+      <label class="tcheck"><input type="checkbox" data-role="on"${on?' checked':''}><span class="box"></span>
+        <span class="tname"><b>${TYPE_LABEL[t]}</b><small>${TYPE_HINT[t]}</small></span></label>
+      <div class="tctl"><div class="stepper">
+        <button type="button" data-step="-1" aria-label="Меньше: ${TYPE_LABEL[t]}"${dis}>−</button>
+        <input type="number" inputmode="numeric" data-role="n" min="1" max="${maxOf(t)}" value="${st.n[t]}" aria-label="Количество: ${TYPE_LABEL[t]}"${dis}>
+        <button type="button" data-step="1" aria-label="Больше: ${TYPE_LABEL[t]}"${dis}>+</button>
+      </div>${showOf?`<span class="of">из ${maxOf(t)}</span>`:''}</div>
+    </div>`;
+  }).join('');
+}
+function bindTypeRows(root, st, maxOf, onChange){
+  root.querySelectorAll('.type-row').forEach(row=>{
+    const t=row.dataset.t, cb=row.querySelector('[data-role=on]'), inp=row.querySelector('[data-role=n]'), btns=row.querySelectorAll('[data-step]');
+    const clamp = v => Math.max(1, Math.min(maxOf(t), Math.round(v) || 1));
+    cb.addEventListener('change', ()=>{
+      st.on[t]=cb.checked; row.classList.toggle('off',!cb.checked);
+      inp.disabled=!cb.checked; btns.forEach(b=>b.disabled=!cb.checked); onChange();
+    });
+    inp.addEventListener('input', ()=>{ const v=parseInt(inp.value,10); if(!isNaN(v)){ st.n[t]=clamp(v); onChange(); } });
+    inp.addEventListener('change', ()=>{ st.n[t]=clamp(parseInt(inp.value,10)); inp.value=st.n[t]; onChange(); });
+    btns.forEach(b=>b.addEventListener('click', ()=>{ st.n[t]=clamp(st.n[t]+(+b.dataset.step)); inp.value=st.n[t]; onChange(); }));
+  });
+}
+
+/* ---------- общие куски ---------- */
+function tile(d){
+  const p = deckProgress(d);
+  return `<a class="tile" href="#deck-${d.id}" data-title="${esc((d.title+' '+d.subject).toLowerCase())}">
+    <span class="eyebrow">${esc(d.subject)}</span>
+    <h3>${esc(d.title)}</h3>
+    <span class="count">${cardsWord(d.cards.length)}</span>
+    <div class="foot"><div class="bar"><span style="width:${pct(p)}"></span></div>
+    <div class="meta"><span>Выучено ${deckLearned(d)} из ${d.cards.length}</span><span>${esc(deckWhen(d))}</span></div></div>
+  </a>`;
+}
+const optionsOf = c => c.type==='tf' ? ['Верно','Неверно'] : c.type==='yn' ? ['Да','Нет'] : c.options;
+const correctIndex = c => c.type==='tf' ? (c.truth?0:1) : c.type==='yn' ? (c.yes?0:1) : c.correct;
+const answerText = c => c.type==='def' ? c.a : optionsOf(c)[correctIndex(c)];
+const countByType = cards => { const m={}; TYPES.forEach(t=>m[t]=0); cards.forEach(c=>m[c.type]++); return m; };
+function composition(cards){
+  const m = countByType(cards);
+  return TYPES.filter(t=>m[t]).map(t=>`${TYPE_LABEL[t].toLowerCase()} — ${m[t]}`).join(' · ');
+}
+
+/* ---------- главная ---------- */
+function viewHome(){
+  const recent = allDecks().slice().sort((a,b)=>deckLastAt(b)-deckLastAt(a)).slice(0,3);
+  return `
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Конспект → карточки</p>
+      <h1>Загрузите конспект. <em>Учите</em> по карточкам.</h1>
+      <p class="lead">Шалфей превращает ваши записи в карточки пяти видов: определения, выбор ответа, верное утверждение, «верно или неверно» и «да или нет». Вы сами решаете, каких вопросов и сколько будет в колоде.</p>
+      <div class="row">
+        <a class="btn primary" href="#upload">${ICON.upload.replace('width="24" height="24"','width="18" height="18"')} Загрузить конспект</a>
+        <a class="btn ghost" href="#study-physics">Попробовать на примере</a>
+      </div>
+      <p class="fine">PDF, DOCX, TXT, Markdown или фото страниц тетради</p>
+    </div>
+    <div class="demo">
+      <div class="stack one" aria-hidden="true"></div><div class="stack two" aria-hidden="true"></div>
+      <div class="flip" data-demo tabindex="0" role="button" aria-label="Перевернуть карточку">
+        <div class="flip-inner">
+          <div class="face front">
+            <div class="face-head"><span class="tag">Определение</span><span class="subj">Физика</span></div>
+            <p class="prompt">Момент силы — это…</p>
+            <p class="hint">Нажмите, чтобы перевернуть</p>
+          </div>
+          <div class="face back">
+            <div class="face-head"><span class="tag">Ответ</span><span class="subj">Физика</span></div>
+            <p class="formula">M = F · d</p>
+            <p class="answer">Произведение модуля силы на её плечо. Измеряется в ньютон-метрах.</p>
+            <p class="hint">Нажмите ещё раз, чтобы вернуться</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>Как это работает</h2></div>
+    <ol class="steps">
+      <li><h3>Загрузите конспект</h3><p>Файл с компьютера, фото тетради или текст, вставленный вручную.</p></li>
+      <li><h3>Выберите вопросы</h3><p>Отметьте нужные виды вопросов и укажите, сколько каждого вида нужно.</p></li>
+      <li><h3>Повторяйте</h3><p>Ошибки возвращаются в начало следующей сессии, а прогресс виден в личном кабинете.</p></li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>Пять видов вопросов</h2></div>
+    <div class="types">
+      <div class="mini"><span class="tag">Определение</span><p class="prompt">Момент инерции — это…</p><p class="desc">Вспомните ответ, переверните карточку и отметьте, знали ли его.</p></div>
+      <div class="mini"><span class="tag">Выбор ответа</span><p class="prompt">В каких единицах измеряется момент силы?</p><p class="desc">Четыре варианта, правильный один.</p></div>
+      <div class="mini"><span class="tag">Верное утверждение</span><p class="prompt">Выберите верное утверждение о моменте импульса</p><p class="desc">Четыре утверждения, верно только одно.</p></div>
+      <div class="mini"><span class="tag">Верно или неверно</span><p class="prompt">У бактерий есть оформленное ядро.</p><p class="desc">Решите, правдиво ли утверждение.</p></div>
+      <div class="mini"><span class="tag">Да или нет</span><p class="prompt">Вращается ли фигуристка быстрее, прижав руки?</p><p class="desc">Ответ «да» или «нет» с пояснением.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>Продолжить</h2><a href="#library">Все колоды</a></div>
+    <div class="grid">${recent.map(tile).join('')}</div>
+  </section>`;
+}
+
+/* ---------- библиотека ---------- */
+function viewLibrary(){
+  const decks = allDecks();
+  return `
+  <section class="page-head split">
+    <div><p class="eyebrow">${cardsWord(decks.reduce((s,d)=>s+d.cards.length,0))} в ${decks.length} ${plural(decks.length,'колоде','колодах','колодах')}</p><h1 style="margin-top:12px">Мои колоды</h1></div>
+    <label class="search" for="deckSearch">${ICON.search}<input type="search" id="deckSearch" placeholder="Найти колоду" autocomplete="off"></label>
+  </section>
+  <div class="grid" id="deckGrid">
+    ${decks.map(tile).join('')}
+    <a class="tile add" href="#upload"><span class="plus">${ICON.plus}</span><b>Новая колода</b><span>Загрузите конспект</span></a>
+  </div>
+  <p class="empty" id="noDecks" hidden>Ничего не найдено. Проверьте название или загрузите новый конспект.</p>`;
+}
+
+/* ---------- колода ---------- */
+const CQ = {deckId:null, on:{}, n:{}};
+let pendingCustom = null;
+function viewDeck(d){
+  const avail = countByType(d.cards);
+  if(CQ.deckId !== d.id){ CQ.deckId=d.id; TYPES.forEach(t=>{ CQ.on[t]=avail[t]>0; CQ.n[t]=avail[t]||1; }); }
+  const learned = deckLearned(d);
+  const status = c => { const s=cardStat(c); return !s ? '<span class="st">новая</span>' : s.last ? '<span class="st ok">знаю</span>' : '<span class="st no">ошибка</span>'; };
+  return `
+  <section class="deck-head">
+    <a class="back-link" href="#library">${ICON.left} Мои колоды</a>
+    <p class="eyebrow">${esc(d.subject)}</p>
+    <h1>${esc(d.title)}</h1>
+    <div class="meta-line"><span>${cardsWord(d.cards.length)}</span><span>Источник: ${esc(d.source)}</span><span>Последнее занятие: ${esc(deckLastAt(d)?rel(deckLastAt(d)):'ещё не было')}</span></div>
+    <div class="progress-line"><div class="bar"><span style="width:${pct(deckProgress(d))}"></span></div><span>выучено ${learned} из ${d.cards.length}</span></div>
+    ${d.demo ? '<p class="notice">Это макет: распознавание конспекта пока не подключено, поэтому в колоду попали карточки из примера по физике.</p>' : ''}
+    <div class="row" style="margin-top:8px">
+      <a class="btn primary" href="#study-${d.id}">Учить все карточки</a>
+      ${d.demo ? '<button type="button" class="btn ghost" data-action="del-deck">Удалить колоду</button>' : ''}
+    </div>
+  </section>
+  <section class="section" style="padding-top:8px">
+    <div class="panel">
+      <h2 style="margin-bottom:6px">Собрать квиз</h2>
+      <p class="muted" style="margin-bottom:16px">Отметьте виды вопросов и укажите, сколько каждого взять из колоды. Сначала попадут вопросы с ошибками и новые.</p>
+      <div class="type-list" id="cq">${typeRows(CQ, t=>avail[t], true)}</div>
+      <div class="row" style="margin-top:16px;justify-content:space-between">
+        <span class="muted" id="cqTotal">Всего: ${qWord(totalOf(CQ))}</span>
+        <button type="button" class="btn primary" data-action="cq-start" id="cqStart"${totalOf(CQ)?'':' disabled'}>Начать квиз</button>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top:12px">
+    <div class="section-head"><h2>Карточки</h2><span class="fine">${composition(d.cards)}</span></div>
+    <ul class="card-list">
+      ${d.cards.map(c=>`<li><span class="tag">${TYPE_LABEL[c.type]}</span><span class="q">${esc(c.q)}</span><span class="a">${esc(answerText(c))}</span>${status(c)}</li>`).join('')}
+    </ul>
+  </section>`;
+}
+function bindDeck(d){
+  const avail = countByType(d.cards);
+  const root = $('#cq'); if(!root) return;
+  bindTypeRows(root, CQ, t=>avail[t], ()=>{
+    const n = totalOf(CQ);
+    $('#cqTotal').textContent = 'Всего: '+qWord(n);
+    $('#cqStart').disabled = n===0;
+  });
+}
+
+/* ---------- обучение ---------- */
+let S = null;
+const cur = () => S.cards[S.i];
+function orderCards(list){
+  let a = list.slice();
+  if(DB.settings.shuffle) shuffle(a);
+  if(DB.settings.mistakes){
+    const rank = c => { const s=cardStat(c); return !s ? 1 : s.last ? 2 : 0; };
+    a = a.map((c,i)=>({c,i})).sort((x,y)=>rank(x.c)-rank(y.c) || x.i-y.i).map(x=>x.c);
+  }
+  return a;
+}
+function startStudy(id, mode, opt){
+  opt = opt || {};
+  const d = deckById(id);
+  if(!d){ location.hash='library'; return; }
+  let cards;
+  if(opt.counts){
+    cards = [];
+    TYPES.forEach(t=>{ const n=opt.counts[t]||0; if(n) cards = cards.concat(orderCards(d.cards.filter(c=>c.type===t)).slice(0,n)); });
+    if(DB.settings.shuffle) shuffle(cards);
+  } else {
+    cards = mode==='quiz' ? d.cards.filter(c=>c.type!=='def') : d.cards.slice();
+    if(opt.ids) cards = cards.filter(c=>opt.ids.includes(c.id));
+    cards = orderCards(cards);
+  }
+  S = {deck:d, mode, cards, opt, i:0, flipped:false, seen:false, answered:false, results:[], saved:false};
+  renderStudy();
+}
+
+function renderStudy(){
+  if(S.i >= S.cards.length) return renderResults();
+  const c = cur(), n = S.cards.length;
+  S.flipped=false; S.seen=false; S.answered=false;
+  const head = label => `<div class="face-head"><span class="tag">${label}</span><span class="subj">${esc(S.deck.subject)}</span></div>`;
+  let front, back='';
+  if(c.type==='def'){
+    front = `${head('Определение')}<p class="prompt">${esc(c.q)}</p><p class="hint">Вспомните ответ и нажмите на карточку</p>`;
+    back  = `${head('Ответ')}<p class="answer">${esc(c.a)}</p><p class="hint">Оцените себя кнопками ниже</p>`;
+  } else {
+    const two = c.type==='tf' || c.type==='yn';
+    front = `${head(TYPE_LABEL[c.type])}<p class="prompt">${esc(c.q)}</p>
+      <div class="options${two?' tf':''}">${optionsOf(c).map((o,i)=>`<button type="button" class="opt" data-action="pick" data-i="${i}"><kbd>${i+1}</kbd><span>${esc(o)}</span></button>`).join('')}</div>`;
+  }
+  app.innerHTML = `<div class="view"><section class="study">
+    <div class="study-top">
+      <a class="back-link" href="#deck-${S.deck.id}">${ICON.left} ${esc(S.deck.title)}${S.mode==='quiz'?' · квиз':''}</a>
+      <span class="counter">${S.i+1} / ${n}</span>
+    </div>
+    <div class="bar"><span style="width:${(S.i/n*100).toFixed(1)}%"></span></div>
+    <div class="flip" id="card" aria-live="polite">
+      <div class="flip-inner">
+        <div class="face front">${front}</div>
+        <div class="face back" id="backFace">${back}</div>
+      </div>
+    </div>
+    <div class="study-controls" id="controls"></div>
+    <p class="keys">Пробел — перевернуть · 1–4 — ответить · Enter — дальше</p>
+  </section></div>`;
+  renderControls();
+}
+
+function renderControls(){
+  const el = $('#controls'); if(!el) return;
+  const c = cur();
+  if(c.type==='def'){
+    el.innerHTML = S.seen
+      ? `<button type="button" class="btn bad" data-action="rate" data-ok="0"><kbd>1</kbd> Не знал</button><button type="button" class="btn primary" data-action="rate" data-ok="1"><kbd>2</kbd> Знал</button>`
+      : `<button type="button" class="btn ghost" data-action="flip">Перевернуть</button>`;
+  } else {
+    el.innerHTML = S.answered
+      ? `<button type="button" class="btn primary" data-action="next">Дальше</button>`
+      : `<button type="button" class="btn ghost" data-action="reveal">Не знаю, показать ответ</button>`;
+  }
+}
+
+function studyFlip(){
+  const c = cur();
+  if(c.type!=='def' && !S.answered) return;
+  S.flipped = !S.flipped;
+  if(S.flipped) S.seen = true;
+  $('#card').classList.toggle('is-flipped', S.flipped);
+  renderControls();
+}
+
+function pick(i){
+  if(S.answered) return;
+  const c = cur(), ci = correctIndex(c), ok = i===ci;
+  S.answered = true;
+  S.results.push({c, ok});
+  recordAnswer(c, ok);
+  document.querySelectorAll('#card .opt').forEach((b,j)=>{
+    b.disabled = true;
+    if(j===ci) b.classList.add('is-right');
+    else if(j===i) b.classList.add('is-wrong');
+  });
+  const verdict = ok ? '<span class="verdict ok">Верно</span>' : `<span class="verdict no">${i<0?'Ответ':'Неверно'}</span>`;
+  const label = {choice:'Правильный ответ', stmt:'Верное утверждение', tf:'Это утверждение', yn:'Правильный ответ'}[c.type];
+  const right = c.type==='tf' ? `Утверждение <b>${c.truth?'верно':'неверно'}</b>.` : `${label}: <b>${esc(optionsOf(c)[ci])}</b>`;
+  $('#backFace').innerHTML = `<div class="face-head">${verdict}<span class="subj">${esc(S.deck.subject)}</span></div>
+    <p class="prompt sm">${esc(c.q)}</p><p class="answer">${right}</p><p class="explain">${esc(c.why)}</p>
+    <p class="hint">Нажмите на карточку, чтобы вернуться к вопросу</p>`;
+  renderControls();
+  setTimeout(()=>{ if(S && cur()===c && !S.flipped){ S.flipped=true; S.seen=true; const el=$('#card'); if(el) el.classList.add('is-flipped'); } }, reduced()?0:450);
+}
+
+function rate(ok){ const c=cur(); S.results.push({c, ok}); recordAnswer(c, ok); next(); }
+function next(){ S.i++; renderStudy(); }
+
+function renderResults(){
+  const total = S.results.length, ok = S.results.filter(r=>r.ok).length;
+  const p = total ? ok/total : 0;
+  const missed = S.results.filter(r=>!r.ok);
+  if(!S.saved && total){
+    S.saved = true;
+    DB.sessions.unshift({deck:S.deck.id, title:S.deck.title, mode:S.mode, n:total, ok, at:Date.now()});
+    DB.sessions = DB.sessions.slice(0,50);
+    save();
+  }
+  const today = (DB.days[todayKey()]||{n:0}).n, goal = DB.settings.goal;
+  const phrase = p===1 ? 'Все ответы верные. Можно браться за следующую тему.'
+    : p>=.7 ? 'Хороший результат. Повторите ошибки, чтобы закрепить материал.'
+    : 'Стоит пройти ещё раз — вопросы с ошибками собраны ниже.';
+  app.innerHTML = `<div class="view"><section class="results">
+    <p class="eyebrow">${esc(S.deck.title)} · ${S.mode==='quiz'?'квиз':'карточки'} пройдены</p>
+    <p class="score">${ok}<small> из ${total}</small></p>
+    <p class="lead">${phrase} Сегодня отвечено ${today} из ${goal} по дневной цели.</p>
+    <div class="bar"><span style="width:${pct(p)}"></span></div>
+    <div class="row" style="margin-top:8px">
+      ${missed.length ? `<button type="button" class="btn primary" data-action="retry">Повторить ошибки · ${missed.length}</button>` : ''}
+      <button type="button" class="btn ${missed.length?'ghost':'primary'}" data-action="restart">Пройти заново</button>
+      <a class="btn ghost" href="#deck-${S.deck.id}">К колоде</a>
+      <a class="btn ghost" href="#profile">Статистика</a>
+    </div>
+    ${missed.length ? `<h2 style="margin-top:24px;font-size:21px">Что повторить</h2><ul class="missed">${missed.map(r=>`<li><b>${esc(r.c.q)}</b><span>${esc(answerText(r.c))}</span></li>`).join('')}</ul>` : ''}
+  </section></div>`;
+}
+
+/* ---------- загрузка ---------- */
+const MAX_PER_TYPE = 50, MAX_TOTAL = 250;
+const U = {tab:'file', file:null, text:'', name:'', subject:'Физика',
+  on:{def:true,choice:true,stmt:true,tf:true,yn:true}, n:{def:6,choice:5,stmt:3,tf:4,yn:3},
+  level:'mid', phase:'form', step:0, made:null, short:[]};
+const STAGES = ['Загружаем файл','Читаем текст конспекта','Находим термины и определения','Составляем вопросы и варианты ответов','Собираем колоду'];
+let procTimer = null;
+const sourceOk = () => U.tab==='file' ? !!U.file : U.text.trim().length>=100;
+const canGenerate = () => sourceOk() && totalOf(U)>0;
+
+function viewUpload(){
+  if(U.phase==='processing') return viewProcessing();
+  if(U.phase==='done') return viewDone();
+  const ext = U.file ? (U.file.name.split('.').pop() || 'file').slice(0,4) : '';
+  const fileBlock = U.file
+    ? `<div class="file-card">
+        <div class="file-row"><span class="ext">${esc(ext)}</span><span class="name"><b>${esc(U.file.name)}</b><span>${fmtSize(U.file.size)} · готов к обработке</span></span>
+        <button type="button" class="x-btn" data-action="remove-file" aria-label="Убрать файл">${ICON.x}</button></div>
+        <label class="btn soft sm" for="fileInput">Выбрать другой файл</label>
+        <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx,.txt,.md,.jpg,.jpeg,.png">
+      </div>`
+    : `<label class="drop" id="drop" for="fileInput">
+        <span class="drop-icon">${ICON.upload}</span>
+        <b>Перетащите конспект сюда</b>
+        <span>или <u>выберите файл</u> на устройстве</span>
+        <span class="fine">PDF, DOCX, TXT, MD, JPG, PNG · до 20 МБ</span>
+      </label>
+      <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx,.txt,.md,.jpg,.jpeg,.png">`;
+  const textBlock = `<textarea id="noteText" aria-label="Текст конспекта" placeholder="Вставьте текст конспекта. Например: «Момент силы — физическая величина, равная произведению силы на её плечо…»">${esc(U.text)}</textarea>
+    <div class="ta-foot"><span id="charCount">${U.text.length} ${plural(U.text.length,'символ','символа','символов')}</span><span>Минимум 100 символов</span></div>`;
+  return `
+  <section class="page-head">
+    <p class="eyebrow">Новая колода</p>
+    <h1>Загрузите конспект</h1>
+    <p class="lead">Файл, фото тетради или текст. Ниже выберите, какие вопросы и в каком количестве из него сделать.</p>
+  </section>
+  <div class="upload">
+    <div class="col">
+      <div class="panel">
+        <div class="seg" role="tablist" aria-label="Способ загрузки">
+          <button type="button" role="tab" aria-selected="${U.tab==='file'}" data-action="tab" data-tab="file">Файл</button>
+          <button type="button" role="tab" aria-selected="${U.tab==='text'}" data-action="tab" data-tab="text">Вставить текст</button>
+        </div>
+        ${U.tab==='file' ? fileBlock : textBlock}
+      </div>
+    </div>
+    <form class="panel settings" id="settings" novalidate>
+      <div class="field"><label class="label" for="deckName">Название колоды</label>
+        <input type="text" id="deckName" value="${esc(U.name)}" placeholder="${U.file ? esc(U.file.name.replace(/\.[^.]+$/,'')) : 'Например, Динамика вращения'}"></div>
+      <div class="field"><label class="label" for="subject">Предмет</label>
+        <select id="subject">${SUBJECTS.map(s=>`<option${s===U.subject?' selected':''}>${s}</option>`).join('')}</select></div>
+      <div class="field"><span class="label">Виды вопросов и количество</span>
+        <div class="type-list" id="upTypes">
+          ${typeRows(U, ()=>MAX_PER_TYPE, false)}
+          <div class="total-row"><label class="label" for="upTotal">Всего карточек</label>
+            <input type="number" class="total-input" id="upTotal" inputmode="numeric" min="1" max="${MAX_TOTAL}" value="${totalOf(U)}"></div>
+        </div>
+        <span class="fine">Введите любое число в «Всего» — оно поровну разделится между отмеченными видами. Или задайте количество каждого вида отдельно.</span>
+      </div>
+      <fieldset class="field" style="border:0;margin:0;padding:0"><legend class="label" style="margin-bottom:8px">Сложность вопросов</legend>
+        <div class="seg">
+          ${[['easy','Базовая'],['mid','Средняя'],['hard','Сложная']].map(([v,l])=>`<label><input type="radio" name="level" value="${v}"${U.level===v?' checked':''}>${l}</label>`).join('')}
+        </div></fieldset>
+      <button type="submit" class="btn primary" id="genBtn"${canGenerate()?'':' disabled'}>Создать карточки</button>
+      <p class="fine" id="genHint" style="margin-top:-10px"></p>
+    </form>
+  </div>`;
+}
+
+function viewProcessing(){
+  const src = U.tab==='file' && U.file ? U.file.name : 'вставленного текста';
+  return `<section class="process">
+    <p class="eyebrow">Обработка</p>
+    <h1 style="font-size:clamp(28px,4vw,38px)">Собираем ${cardsWord(totalOf(U))}</h1>
+    <p class="muted">Из ${esc(src)}</p>
+    <div class="bar"><span style="width:${(U.step/STAGES.length*100).toFixed(0)}%"></span></div>
+    <ul class="stages">${STAGES.map((s,i)=>`<li class="${i<U.step?'done':i===U.step?'now':''}"><span class="dot">${i<U.step?ICON.check:''}</span>${s}</li>`).join('')}</ul>
+    <div><button type="button" class="btn ghost sm" data-action="cancel">Отменить</button></div>
+  </section>`;
+}
+
+function viewDone(){
+  const d = U.made;
+  const short = U.short.length
+    ? `<p class="notice">В демо-примере не хватило вопросов: ${U.short.map(s=>`${TYPE_LABEL[s.type].toLowerCase()} — ${s.got} из ${s.want}`).join('; ')}. Когда подключится разбор конспекта, количество будет точным.</p>` : '';
+  return `<section class="process">
+    <p class="eyebrow">Готово</p>
+    <h1 style="font-size:clamp(30px,4.4vw,44px)">${esc(d.title)}</h1>
+    <p class="lead">${cardsWord(d.cards.length)}: ${composition(d.cards)}.</p>
+    <p class="notice">Это макет: распознавание конспекта пока не подключено, поэтому в колоду попали карточки из примера по физике.</p>
+    ${short}
+    <div class="row"><a class="btn primary" href="#study-${d.id}">Начать учить</a><a class="btn ghost" href="#deck-${d.id}">Открыть колоду</a><button type="button" class="btn soft" data-action="reset">Загрузить ещё</button></div>
+  </section>`;
+}
+
+function startGeneration(){
+  U.phase='processing'; U.step=0; render(false);
+  clearInterval(procTimer);
+  procTimer = setInterval(()=>{
+    U.step++;
+    if(U.step >= STAGES.length){
+      clearInterval(procTimer);
+      const id = 'my' + Date.now().toString(36);
+      const cards = []; U.short = [];
+      TYPES.forEach(t=>{
+        if(!U.on[t]) return;
+        const pool = PHYSICS.filter(c=>c.type===t), want = U.n[t], got = Math.min(want, pool.length);
+        if(got < want) U.short.push({type:t, want, got});
+        pool.slice(0,got).forEach(c=>cards.push(Object.assign({}, c, {id:c.id+'-'+id})));
+      });
+      const stem = U.file ? U.file.name.replace(/\.[^.]+$/,'') : '';
+      const deck = {id, title:U.name.trim() || stem || 'Новый конспект', subject:U.subject,
+        source: U.tab==='file' && U.file ? U.file.name : 'вставленный текст', demo:true, created:Date.now(), cards};
+      DB.decks.unshift(deck); save();
+      U.made = deck; U.phase='done';
+    }
+    if(location.hash==='#upload') render(false);
+  }, 650);
+}
+
+function setFile(f){
+  if(!/\.(pdf|docx?|txt|md|jpe?g|png)$/i.test(f.name)){ toast('Этот формат не подходит. Загрузите PDF, DOCX, TXT, MD или изображение.'); return; }
+  if(f.size > 20*1024*1024){ toast('Файл больше 20 МБ. Разделите конспект на части.'); return; }
+  U.file = {name:f.name, size:f.size}; render(false);
+}
+
+function updateGenState(){
+  const b=$('#genBtn'), h=$('#genHint'); if(!b) return;
+  b.disabled = !canGenerate();
+  const n = totalOf(U);
+  h.textContent = !sourceOk() ? (U.tab==='file'?'Сначала добавьте файл конспекта.':'Вставьте хотя бы 100 символов текста.')
+    : n===0 ? 'Отметьте хотя бы один вид вопросов.'
+    : `Будет ${cardsWord(n)}.`;
+  const tot = $('#upTotal'); if(tot && document.activeElement!==tot) tot.value = n;
+}
+
+function distribute(total){
+  const on = TYPES.filter(t=>U.on[t]);
+  if(!on.length){ toast('Сначала отметьте хотя бы один вид вопросов'); return; }
+  total = Math.max(on.length, Math.min(MAX_TOTAL, total|0));
+  const base = Math.floor(total/on.length), rem = total % on.length;
+  on.forEach((t,i)=>{ U.n[t] = Math.min(MAX_PER_TYPE, base + (i<rem?1:0)); });
+  render(false);
+}
+
+function bindUpload(){
+  const fi=$('#fileInput'), drop=$('#drop'), ta=$('#noteText'), form=$('#settings');
+  if(fi) fi.addEventListener('change', ()=>{ if(fi.files[0]) setFile(fi.files[0]); });
+  if(drop){
+    ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('is-over');}));
+    ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('is-over');}));
+    drop.addEventListener('drop',e=>{ const f=e.dataTransfer && e.dataTransfer.files[0]; if(f) setFile(f); });
+  }
+  if(ta) ta.addEventListener('input', ()=>{
+    U.text = ta.value; const n=U.text.length;
+    $('#charCount').textContent = n+' '+plural(n,'символ','символа','символов');
+    updateGenState();
+  });
+  if(!form) return;
+  $('#deckName').addEventListener('input', e=>{ U.name=e.target.value; });
+  $('#subject').addEventListener('change', e=>{ U.subject=e.target.value; });
+  bindTypeRows($('#upTypes'), U, ()=>MAX_PER_TYPE, updateGenState);
+  $('#upTotal').addEventListener('change', e=>{ const v=parseInt(e.target.value,10); if(!isNaN(v)) distribute(v); else updateGenState(); });
+  $('#upTotal').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); e.target.blur(); } });
+  form.querySelectorAll('input[name="level"]').forEach(i=>i.addEventListener('change', ()=>{ U.level=i.value; }));
+  form.addEventListener('submit', e=>{ e.preventDefault(); if(canGenerate()) startGeneration(); });
+  updateGenState();
+}
+window.addEventListener('dragover', e=>e.preventDefault());
+window.addEventListener('drop', e=>e.preventDefault());
+
+/* ---------- личный кабинет ---------- */
+function heatmap(){
+  const now = new Date(); now.setHours(0,0,0,0);
+  const dow = (now.getDay()+6)%7;
+  const start = new Date(now); start.setDate(now.getDate()-dow-7*14);
+  const goal = Math.max(1, DB.settings.goal);
+  let cells = '';
+  for(let i=0;i<105;i++){
+    const d = new Date(start); d.setDate(start.getDate()+i);
+    const label = d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'});
+    if(d > now){ cells += '<i class="f"></i>'; continue; }
+    const n = (DB.days[dayKey(d)]||{n:0}).n, r = n/goal;
+    const l = n===0 ? 0 : r<.34 ? 1 : r<.67 ? 2 : r<1 ? 3 : 4;
+    cells += `<i data-l="${l}" title="${label}: ${cardsWord(n)}"></i>`;
+  }
+  return cells;
+}
+let resetArmed = false;
+function viewProfile(){
+  const decks = allDecks(), tot = totals(), st = streak();
+  const totalCards = decks.reduce((s,d)=>s+d.cards.length,0);
+  const learned = decks.reduce((s,d)=>s+deckLearned(d),0);
+  const today = (DB.days[todayKey()]||{n:0,ok:0}), goal = DB.settings.goal;
+  const name = (DB.settings.name||'').trim();
+  const sessions = DB.sessions.slice(0,6);
+  const activeDays = Object.values(DB.days).filter(d=>d.n>0).length;
+  return `
+  <section class="profile-head">
+    <span class="avatar lg">${esc(initials())}</span>
+    <div class="who"><h1>${name ? esc(name) : 'Личный кабинет'}</h1>
+      <span class="muted">Статистика ведётся с ${new Date(DB.since).toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})} · ${activeDays} ${plural(activeDays,'день','дня','дней')} с занятиями</span></div>
+    <a class="btn primary" href="#upload">Загрузить конспект</a>
+  </section>
+  ${storageOk ? '' : '<p class="notice" style="margin-bottom:16px">Браузер не разрешает сохранять данные на этой странице, поэтому статистика сбросится после перезагрузки.</p>'}
+  <div class="stats">
+    <div class="stat"><b>${st}</b><span>${plural(st,'день','дня','дней')} подряд</span></div>
+    <div class="stat"><b>${tot.n}</b><span>${plural(tot.n,'ответ','ответа','ответов')} всего</span></div>
+    <div class="stat"><b>${tot.n ? pct(tot.ok/tot.n) : '—'}</b><span>верных ответов</span></div>
+    <div class="stat"><b>${learned}</b><span>выучено из ${totalCards} карточек</span></div>
+  </div>
+  <div class="two">
+    <div class="col">
+      <div class="panel">
+        <h2>Активность</h2>
+        <div class="goal">
+          <div class="goal-top"><span class="muted">Сегодня</span><b>${today.n} / ${goal}</b></div>
+          <div class="bar"><span style="width:${Math.min(100, today.n/goal*100).toFixed(0)}%"></span></div>
+          <span class="fine">${today.n>=goal ? 'Дневная цель выполнена.' : `До дневной цели ${goal-today.n} ${plural(goal-today.n,'ответ','ответа','ответов')}.`}${today.n ? ` Верно ${today.ok} из ${today.n}.` : ''}</span>
+        </div>
+        <div class="heat-wrap"><div class="heat" role="img" aria-label="Календарь ответов за последние 15 недель">${heatmap()}</div></div>
+        <div class="heat-legend">Меньше <i data-l="0" style="background:var(--surface-2)"></i><i data-l="1"></i><i data-l="2"></i><i data-l="3"></i><i data-l="4"></i> Больше · насыщенность считается от дневной цели</div>
+      </div>
+      <div class="panel">
+        <h2>Точность по видам вопросов</h2>
+        <ul class="deck-progress" style="margin-top:0">${TYPES.map(t=>{ const s=DB.types[t]; return `<li><span style="text-align:left;font:inherit;color:var(--ink-strong)">${TYPE_LABEL[t]}</span><div class="bar"><span style="width:${s&&s.n?pct(s.ok/s.n):'0%'}"></span></div><span>${s&&s.n?pct(s.ok/s.n):'—'}</span></li>`; }).join('')}</ul>
+        <p class="fine" style="margin-top:14px">${tot.n ? 'Процент верных ответов среди всех ответов этого вида.' : 'Ответьте на несколько вопросов, и здесь появится точность.'}</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="panel">
+        <h2>Последние занятия</h2>
+        ${sessions.length ? `<ul class="sessions">${sessions.map(s=>`<li><b>${esc(s.title)}</b><span class="sc">${s.ok} / ${s.n}</span><small>${s.mode==='quiz'?'Квиз':'Карточки'} · ${rel(s.at)}, ${hm(s.at)}</small><small style="text-align:right">${pct(s.ok/s.n)}</small></li>`).join('')}</ul>`
+          : '<p class="muted">Пока нет завершённых занятий. Пройдите любую колоду — результат появится здесь.</p>'}
+      </div>
+      <div class="panel">
+        <h2>Прогресс по колодам</h2>
+        <ul class="deck-progress" style="margin-top:0">${decks.map(d=>`<li><a href="#deck-${d.id}">${esc(d.title)}</a><div class="bar"><span style="width:${pct(deckProgress(d))}"></span></div><span>${deckLearned(d)}/${d.cards.length}</span></li>`).join('')}</ul>
+        <p class="fine" style="margin-top:14px">Карточка считается выученной, если на неё последний раз ответили верно.</p>
+      </div>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:20px">
+    <h2>Настройки</h2>
+    <div class="set-row"><label class="t" for="pName">Имя<small>Показывается в кабинете и на аватаре</small></label>
+      <input type="text" id="pName" value="${esc(name)}" placeholder="Как к вам обращаться" style="max-width:260px"></div>
+    <div class="set-row"><div class="t">Тема оформления<small>Системная следует настройке устройства</small></div>
+      <div class="seg" role="radiogroup" aria-label="Тема оформления">
+        <label><input type="radio" name="theme" value="light"${themeChoice()==='light'?' checked':''}>Светлая</label>
+        <label><input type="radio" name="theme" value="dark"${themeChoice()==='dark'?' checked':''}>Тёмная</label>
+        <label><input type="radio" name="theme" value="system"${themeChoice()==='system'?' checked':''}>Системная</label>
+      </div></div>
+    <div class="set-row"><label class="t" for="goal">Цель на день<small>Сколько ответов давать ежедневно</small></label>
+      <select id="goal">${[10,15,20,30,50,100].map(v=>`<option value="${v}"${v===goal?' selected':''}>${v}</option>`).join('')}</select></div>
+    <div class="set-row"><label class="t" for="shuffle">Перемешивать карточки<small>Порядок меняется в каждой сессии</small></label>
+      <span class="switch"><input type="checkbox" id="shuffle"${DB.settings.shuffle?' checked':''}><span></span></span></div>
+    <div class="set-row"><label class="t" for="mistakes">Сначала ошибки<small>Вопросы с ошибками и новые идут в начале сессии</small></label>
+      <span class="switch"><input type="checkbox" id="mistakes"${DB.settings.mistakes?' checked':''}><span></span></span></div>
+    <div class="set-row"><div class="t">Статистика<small>Ответы хранятся в этом браузере. Сброс удалит историю, колоды останутся.</small></div>
+      <div class="row">${resetArmed
+        ? '<button type="button" class="btn sm armed" data-action="reset-stats">Да, сбросить</button><button type="button" class="btn ghost sm" data-action="reset-cancel">Отмена</button>'
+        : '<button type="button" class="btn ghost sm" data-action="reset-arm">Сбросить статистику</button>'}</div></div>
+  </div>`;
+}
+function bindProfile(){
+  const nm=$('#pName');
+  nm.addEventListener('change', ()=>{ DB.settings.name=nm.value.trim().slice(0,60); save(); syncAvatar(); render(false); toast('Имя сохранено'); });
+  nm.addEventListener('keydown', e=>{ if(e.key==='Enter') nm.blur(); });
+  $('#goal').addEventListener('change', e=>{ DB.settings.goal=+e.target.value; save(); render(false); toast('Цель на день: '+DB.settings.goal); });
+  $('#shuffle').addEventListener('change', e=>{ DB.settings.shuffle=e.target.checked; save(); toast('Сохранено'); });
+  $('#mistakes').addEventListener('change', e=>{ DB.settings.mistakes=e.target.checked; save(); toast('Сохранено'); });
+}
+
+/* ---------- роутер ---------- */
+function render(scroll){
+  const h = (location.hash || '#home').slice(1);
+  let nav = h, html = null;
+  if(h!=='upload' && U.phase==='processing'){ clearInterval(procTimer); U.phase='form'; }
+  if(h!=='profile') resetArmed = false;
+  if(!/^(study|quiz)-/.test(h)) S = null;
+
+  if(h==='library') html = viewLibrary();
+  else if(h==='upload') html = viewUpload();
+  else if(h==='profile') html = viewProfile();
+  else if(h.startsWith('deck-')){ const d=deckById(h.slice(5)); html = d ? viewDeck(d) : viewLibrary(); nav='library'; }
+  else if(h.startsWith('study-')){ nav='library'; startStudy(h.slice(6),'cards'); }
+  else if(h.startsWith('quiz-')){
+    nav='library'; const id=h.slice(5);
+    const counts = pendingCustom && pendingCustom.id===id ? pendingCustom.counts : null;
+    pendingCustom = null;
+    startStudy(id,'quiz',{counts});
+  }
+  else { html = viewHome(); nav='home'; }
+
+  if(html!==null) app.innerHTML = `<div class="view">${html}</div>`;
+  document.querySelectorAll('[data-nav]').forEach(a=>{ if(a.dataset.nav===nav) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  if(h==='upload') bindUpload();
+  if(h==='profile') bindProfile();
+  if(h.startsWith('deck-')){ const d=deckById(h.slice(5)); if(d) bindDeck(d); }
+  if(h==='library'){
+    const s=$('#deckSearch');
+    s.addEventListener('input', ()=>{
+      const q=s.value.trim().toLowerCase(); let shown=0;
+      document.querySelectorAll('#deckGrid .tile[data-title]').forEach(t=>{ const v=!q||t.dataset.title.includes(q); t.hidden=!v; if(v) shown++; });
+      $('#noDecks').hidden = shown>0;
+    });
+  }
+  if(scroll!==false) window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', ()=>render(true));
+
+/* ---------- события ---------- */
+document.addEventListener('click', e=>{
+  const a = e.target.closest('[data-action]');
+  if(a){
+    const act = a.dataset.action;
+    if(act==='flip') studyFlip();
+    else if(act==='pick') pick(+a.dataset.i);
+    else if(act==='reveal') pick(-1);
+    else if(act==='rate') rate(a.dataset.ok==='1');
+    else if(act==='next') next();
+    else if(act==='retry') startStudy(S.deck.id, S.mode, {ids:S.results.filter(r=>!r.ok).map(r=>r.c.id)});
+    else if(act==='restart') startStudy(S.deck.id, S.mode, S.opt);
+    else if(act==='cq-start'){
+      const id = CQ.deckId, counts = {};
+      TYPES.forEach(t=>{ counts[t] = CQ.on[t] ? CQ.n[t] : 0; });
+      pendingCustom = {id, counts};
+      if(location.hash==='#quiz-'+id) render(true); else location.hash = 'quiz-'+id;
+    }
+    else if(act==='del-deck'){
+      if(!a.classList.contains('armed')){ a.classList.add('armed'); a.textContent='Нажмите ещё раз, чтобы удалить'; return; }
+      const id = CQ.deckId, d = deckById(id);
+      if(d){ d.cards.forEach(c=>{ delete DB.cards[c.id]; }); DB.decks = DB.decks.filter(x=>x.id!==id); save(); toast('Колода удалена'); }
+      location.hash = 'library';
+    }
+    else if(act==='tab'){ U.tab=a.dataset.tab; render(false); }
+    else if(act==='remove-file'){ U.file=null; render(false); }
+    else if(act==='cancel'){ clearInterval(procTimer); U.phase='form'; render(false); }
+    else if(act==='reset'){ Object.assign(U,{file:null,text:'',name:'',phase:'form',step:0,made:null,short:[]}); render(false); }
+    else if(act==='reset-arm'){ resetArmed=true; render(false); }
+    else if(act==='reset-cancel'){ resetArmed=false; render(false); }
+    else if(act==='reset-stats'){
+      Object.assign(DB,{cards:{},days:{},types:{},sessions:[],since:Date.now()}); save();
+      resetArmed=false; render(false); toast('Статистика сброшена');
+    }
+    return;
+  }
+  const card = e.target.closest('.flip');
+  if(card){
+    if(card.id==='card') studyFlip();
+    else card.classList.toggle('is-flipped');
+  }
+});
+document.addEventListener('change', e=>{ if(e.target.name==='theme') setTheme(e.target.value); });
+document.addEventListener('keydown', e=>{
+  const t = e.target;
+  if(t.matches && t.matches('[data-demo]') && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); t.classList.toggle('is-flipped'); return; }
+  if(!S || !$('#card')) return;
+  if(t.matches && t.matches('input,textarea,select')) return;
+  const c = cur();
+  if(e.key===' '){ e.preventDefault(); studyFlip(); return; }
+  if(/^[1-4]$/.test(e.key)){
+    const n=+e.key;
+    if(c.type==='def'){ if(S.seen && n<=2) rate(n===2); }
+    else if(!S.answered && n<=optionsOf(c).length) pick(n-1);
+    return;
+  }
+  if((e.key==='Enter'||e.key==='ArrowRight') && c.type!=='def' && S.answered){ e.preventDefault(); next(); }
+});
+
+render(false);
+})();
+</script>
