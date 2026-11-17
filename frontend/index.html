@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnowledgeMap — Учитесь по карточкам</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ГЛАВНЫЙ ЭКРАН (ЛЕНДИНГ) -->
+    <div id="screen-landing" class="screen active">
+        <header class="navbar">
+            <div class="logo">K<span>M</span></div>
+            <nav class="nav-links">
+                <a href="#how-it-works">Как это работает</a>
+                <a href="#features">Возможности</a>
+            </nav>
+            <div class="nav-actions" id="nav-actions"></div>
+        </header>
+        
+        <main class="hero">
+            <div class="hero-content">
+                <span class="script-text">Конспект → Карточки</span>
+                <h1>Загрузите конспект.<br><em>Учите по карточкам.</em></h1>
+                <p class="subtitle">Шалфей превращает ваши записи в карточки пяти видов: определения, выбор ответа, верное утверждение, верно или неверно и «да или нет». Вы сами решаете, каких вопросов и сколько будет в колоде.</p>
+                <div class="hero-buttons">
+                    <button class="primary-btn large" onclick="navigate('auth')">Попробовать</button>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <div class="preview-card">
+                    <div class="preview-tags">
+                        <span>ОПРЕДЕЛЕНИЕ</span>
+                        <span>ФИЗИКА</span>
+                    </div>
+                    <p class="preview-text">Момент силы — это...</p>
+                    <div class="preview-footer">Нажмите, чтобы перевернуть</div>
+                </div>
+            </div>
+        </main>
+
+        <section id="how-it-works" class="section">
+            <div class="section-header"><h2>Как это работает</h2></div>
+            <div class="process-grid">
+                <div class="process-card">
+                    <span class="step-num">01</span>
+                    <h3>Загрузите конспект</h3>
+                    <p>Файл с компьютера, фото тетради или текст, вставленный вручную.</p>
+                </div>
+                <div class="process-card">
+                    <span class="step-num">02</span>
+                    <h3>Выберите вопросы</h3>
+                    <p>Отметьте нужные виды вопросов и укажите, сколько каждого вида нужно.</p>
+                </div>
+                <div class="process-card">
+                    <span class="step-num">03</span>
+                    <h3>Повторяйте</h3>
+                    <p>Ошибки возвращаются в начало следующей сессии, а прогресс виден в личном кабинете.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ВОЗВРАЩЕННАЯ СЕКЦИЯ ВОЗМОЖНОСТЕЙ -->
+        <section id="features" class="section">
+            <div class="section-header"><h2>Возможности</h2></div>
+            <div class="questions-grid">
+                <div class="q-card">
+                    <span class="q-tag">ОПРЕДЕЛЕНИЕ</span>
+                    <h4>Момент инерции — это...</h4>
+                    <p class="q-desc">Вспомните ответ, переверните карточку и отметьте, знали ли его.</p>
+                </div>
+                <div class="q-card">
+                    <span class="q-tag">ВЫБОР ОТВЕТА</span>
+                    <h4>В каких единицах измеряется момент силы?</h4>
+                    <p class="q-desc">Четыре варианта, правильный один.</p>
+                </div>
+                <div class="q-card">
+                    <span class="q-tag">ВЕРНО ИЛИ НЕВЕРНО</span>
+                    <h4>У бактерий есть оформленное ядро</h4>
+                    <p class="q-desc">Решите, правдиво ли утверждение.</p>
+                </div>
+                <div class="q-card">
+                    <span class="q-tag">ДА ИЛИ НЕТ</span>
+                    <h4>Вращается ли фигуристка быстрее, прижав руки?</h4>
+                    <p class="q-desc">Ответ «да» или «нет» с пояснением.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ЭКРАН АВТОРИЗАЦИИ -->
+    <div id="screen-auth" class="screen auth-bg">
+        <button class="back-btn fixed-back" onclick="navigate('landing')">← Назад</button>
+        <div class="auth-container">
+            <div class="auth-toggle">
+                <button id="tab-login" class="active" onclick="switchAuthTab('login')">Вход</button>
+                <button id="tab-register" onclick="switchAuthTab('register')">Регистрация</button>
+            </div>
+
+            <form id="form-login" class="auth-form" onsubmit="handleLogin(event)">
+                <h2>С возвращением</h2>
+                <div class="input-group"><label>Логин</label><input type="text" id="login-username" placeholder="Введите логин" required></div>
+                <div class="input-group"><label>Пароль</label><input type="password" id="login-password" placeholder="••••••••" required></div>
+                <p class="error-msg" id="login-error"></p>
+                <button type="submit" class="primary-btn full-width">Войти</button>
+            </form>
+
+            <form id="form-register" class="auth-form hidden" onsubmit="handleRegister(event)">
+                <h2>Создать аккаунт</h2>
+                <div class="input-group"><label>Никнейм</label><input type="text" id="reg-nickname" placeholder="username" required></div>
+                <div class="input-group"><label>Email</label><input type="email" id="reg-email" placeholder="you@example.com" required></div>
+                <div class="input-group"><label>Пароль</label><input type="password" id="reg-password" placeholder="Минимум 6 символов" required minlength="6"></div>
+                <p class="error-msg" id="reg-error"></p>
+                <button type="submit" class="primary-btn full-width mt-20">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ГЛАВНАЯ (ДАШБОРД) -->
+    <div id="screen-dashboard" class="screen">
+        <div class="app-layout">
+            <aside class="sidebar">
+                <div class="sidebar-logo">K<span>M</span></div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" onclick="navigate('dashboard')">🏠 Обзор</a>
+                    <a href="#" class="nav-item" onclick="navigate('my-sets')">📚 Моя библиотека</a>
+                </nav>
+                <div class="sidebar-bottom">
+                    <button class="secondary-btn full-width mb-10" onclick="navigate('create-quiz')">+ Новый квиз</button>
+                    <button class="outline-btn full-width" onclick="navigate('profile')">👤 Профиль</button>
+                    <button class="text-btn full-width mt-10" onclick="logout()" style="text-align: left;">Выйти</button>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <header class="top-bar">
+                    <h2>Обзор</h2>
+                    <div class="user-menu"><button class="avatar-btn" id="dashboard-avatar" onclick="navigate('profile')">U</button></div>
+                </header>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-col">
+                        <div class="section-header">
+                            <h3>Недавние квизы</h3>
+                            <button class="text-btn" onclick="navigate('my-sets')">Все →</button>
+                        </div>
+                        <div class="recent-sets" id="recent-dashboard-sets"></div>
+                    </div>
+                    <div class="dashboard-col">
+                        <div class="streak-widget">
+                            <h3>Текущая серия</h3>
+                            <div class="days-row">
+                                <div class="day active"><span>Пн</span><div class="fire">🔥</div></div>
+                                <div class="day active"><span>Вт</span><div class="fire">🔥</div></div>
+                                <div class="day active"><span>Ср</span><div class="fire">🔥</div></div>
+                                <div class="day active"><span>Чт</span><div class="fire">🔥</div></div>
+                                <div class="day"><span>Пт</span><div class="fire">🔥</div></div>
+                                <div class="day"><span>Сб</span><div class="fire">🔥</div></div>
+                                <div class="day"><span>Вс</span><div class="fire">🔥</div></div>
+                            </div>
+                            <div class="streak-stats">
+                                <div class="stat-block"><span class="stat-lbl">Текущая</span><span class="stat-val">5 дней</span></div>
+                                <div class="stat-block"><span class="stat-lbl">Рекорд</span><span class="stat-val">10 дней</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА СОЗДАНИЯ КВИЗА -->
+    <div id="screen-create-quiz" class="screen">
+        <header class="navbar">
+            <button class="back-btn" onclick="navigate('dashboard')">← Назад</button>
+            <div class="logo">Создание квиза</div>
+        </header>
+        
+        <div class="create-quiz-layout">
+            <div class="create-left">
+                <div class="create-tabs">
+                    <button class="create-tab active" onclick="switchCreateSource('file')">Файл</button>
+                    <button class="create-tab" onclick="switchCreateSource('text')">Вставить текст</button>
+                    <button class="create-tab" onclick="switchCreateSource('topic')">Описать тему</button>
+                </div>
+                <div class="upload-zone" id="upload-zone"></div>
+            </div>
+
+            <div class="create-right">
+                <div class="settings-panel">
+                    <h3>Название колоды</h3>
+                    <input type="text" id="quiz-name" placeholder="Например: Динамика вращения" class="main-input">
+                    
+                    <h3 class="mt-20">Предмет</h3>
+                    <select class="main-input">
+                        <option>Физика</option>
+                        <option>История</option>
+                        <option>Биология</option>
+                    </select>
+
+                    <h3 class="mt-20">Виды вопросов</h3>
+                    
+                    <div class="question-type-row">
+                        <div class="q-type-info">
+                            <strong>Определения</strong>
+                            <span>Вопрос или факт</span>
+                        </div>
+                        <div class="counter">
+                            <button onclick="updateCount('def', -1)">-</button>
+                            <span id="count-def">6</span>
+                            <button onclick="updateCount('def', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="question-type-row">
+                        <div class="q-type-info">
+                            <strong>Квиз (4 варианта)</strong>
+                            <span>Вопрос и четыре варианта</span>
+                        </div>
+                        <div class="counter">
+                            <button onclick="updateCount('quiz', -1)">-</button>
+                            <span id="count-quiz">5</span>
+                            <button onclick="updateCount('quiz', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="question-type-row">
+                        <div class="q-type-info">
+                            <strong>Тест (ввод)</strong>
+                            <span>Введите ответ сами</span>
+                        </div>
+                        <div class="counter">
+                            <button onclick="updateCount('test', -1)">-</button>
+                            <span id="count-test">3</span>
+                            <button onclick="updateCount('test', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="question-type-row">
+                        <div class="q-type-info">
+                            <strong>Верно или Неверно</strong>
+                            <span>Утверждение</span>
+                        </div>
+                        <div class="counter">
+                            <button onclick="updateCount('tf', -1)">-</button>
+                            <span id="count-tf">4</span>
+                            <button onclick="updateCount('tf', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="total-row">
+                        <span>Всего карточек</span>
+                        <strong id="total-cards">18</strong>
+                    </div>
+
+                    <button class="primary-btn full-width mt-20" onclick="createQuiz()">Создать карточки</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА САМОГО КВИЗА -->
+    <div id="screen-quiz" class="screen">
+        <header class="navbar">
+            <button class="back-btn" onclick="navigate('dashboard')">← Назад</button>
+            <div class="quiz-nav-info"><h3 id="quiz-title">Тема</h3></div>
+        </header>
+        
+        <div class="quiz-tabs-container">
+            <div class="quiz-tabs">
+                <button class="tab active" onclick="switchQuizTab('summary')">Конспект</button>
+                <button class="tab" onclick="switchQuizTab('cards')">Карточки</button>
+                <button class="tab" onclick="switchQuizTab('quiz')">Квиз (4 вар.)</button>
+                <button class="tab" onclick="switchQuizTab('test')">Тест</button>
+                <button class="tab" onclick="switchQuizTab('tf')">Верно/Неверно</button>
+                <button class="tab" onclick="switchQuizTab('stats')">Статистика</button>
+            </div>
+        </div>
+
+        <div class="quiz-content">
+            <!-- КОНСПЕКТ -->
+            <div id="tab-summary" class="tab-content active">
+                <div class="summary-card">
+                    <h3>Ваш конспект</h3>
+                    <p class="text-muted" style="margin-bottom: 20px; font-size: 0.9rem;">Вы можете отредактировать текст ниже, если ИИ допустил ошибку.</p>
+                    <textarea id="summary-text" class="main-input" style="height: 400px; resize: vertical; font-family: var(--font-sans); line-height: 1.6;">Здесь будет распознанный текст...</textarea>
+                    <button class="primary-btn mt-20" onclick="saveSummary()">Сохранить изменения</button>
+                </div>
+            </div>
+
+            <!-- КАРТОЧКИ -->
+            <div id="tab-cards" class="tab-content">
+                <div class="flashcard-container">
+                    <div class="flashcard" id="flashcard" onclick="flipCard()">
+                        <div class="card-face card-front">
+                            <span class="card-label">ОПРЕДЕЛЕНИЕ</span>
+                            <p id="card-question">Вопрос</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <span class="card-label">ОТВЕТ</span>
+                            <p id="card-answer">Ответ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-controls">
+                    <button class="outline-btn" onclick="flipCard()">Перевернуть</button>
+                    <button class="secondary-btn" onclick="nextCard(false)">Не знаю</button>
+                    <button class="primary-btn" onclick="nextCard(true)">Знаю</button>
+                </div>
+            </div>
+
+            <!-- КВИЗ (4 варианта) -->
+            <div id="tab-quiz" class="tab-content">
+                <div class="question-card">
+                    <h3 id="quiz-q-text">Вопрос?</h3>
+                    <div class="options" id="quiz-options"></div>
+                    <div id="quiz-feedback" class="feedback-box hidden"></div> <!-- Блок для ответа -->
+                    <button class="primary-btn full-width mt-20" onclick="nextQuizQuestion()">Далее →</button>
+                </div>
+            </div>
+
+            <!-- ТЕСТ (ввод) -->
+            <div id="tab-test" class="tab-content">
+                <div class="question-card">
+                    <h3 id="test-q-text">Вопрос?</h3>
+                    <input type="text" id="test-input" class="main-input mt-20" placeholder="Введите ответ...">
+                    <div id="test-feedback" class="feedback-box hidden"></div> <!-- Блок для ответа -->
+                    <button class="primary-btn full-width mt-20" id="test-check-btn" onclick="checkTestAnswer()">Проверить</button>
+                </div>
+            </div>
+
+            <!-- ВЕРНО / НЕВЕРНО -->
+            <div id="tab-tf" class="tab-content">
+                <div class="question-card">
+                    <h3 id="tf-q-text">Утверждение</h3>
+                    <div id="tf-feedback" class="feedback-box hidden"></div> <!-- Блок для ответа -->
+                    <div class="tf-buttons mt-20">
+                        <button class="tf-btn true" onclick="checkTF(true)">Верно</button>
+                        <button class="tf-btn false" onclick="checkTF(false)">Неверно</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СТАТИСТИКА -->
+            <div id="tab-stats" class="tab-content">
+                <div class="results-card">
+                    <h2>Статистика сессии</h2>
+                    <div class="stats-session-grid">
+                        <div class="stat-box-large"><span class="stat-val-large" id="stat-cards">0</span><span class="stat-lbl">Карточек пролистано</span></div>
+                        <div class="stat-box-large"><span class="stat-val-large" id="stat-quiz">0</span><span class="stat-lbl">Верно в квизе</span></div>
+                        <div class="stat-box-large"><span class="stat-val-large" id="stat-test">0</span><span class="stat-lbl">Верно в тесте</span></div>
+                        <div class="stat-box-large"><span class="stat-val-large" id="stat-tf">0</span><span class="stat-lbl">Верно Верно/Неверно</span></div>
+                    </div>
+                    <button class="primary-btn mt-20" onclick="navigate('dashboard')">На главную</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОИ НАБОРЫ -->
+    <div id="screen-my-sets" class="screen">
+        <div class="app-layout">
+            <aside class="sidebar">
+                <div class="sidebar-logo">K<span>M</span></div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item" onclick="navigate('dashboard')">🏠 Обзор</a>
+                    <a href="#" class="nav-item active">📚 Моя библиотека</a>
+                </nav>
+                <div class="sidebar-bottom">
+                    <button class="secondary-btn full-width mb-10" onclick="navigate('create-quiz')">+ Новый квиз</button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <header class="top-bar"><h2>Моя библиотека</h2></header>
+                <div class="sets-grid" id="all-sets-grid"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ЛИЧНЫЙ КАБИНЕТ -->
+    <div id="screen-profile" class="screen">
+        <div class="app-layout">
+            <aside class="sidebar">
+                <div class="sidebar-logo">K<span>M</span></div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item" onclick="navigate('dashboard')">🏠 Обзор</a>
+                    <a href="#" class="nav-item" onclick="navigate('my-sets')">📚 Моя библиотека</a>
+                    <a href="#" class="nav-item active">👤 Профиль</a>
+                </nav>
+                <div class="sidebar-bottom">
+                    <button class="secondary-btn full-width mb-10" onclick="navigate('create-quiz')">+ Новый квиз</button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <header class="top-bar"><h2>Профиль</h2></header>
+                <div class="profile-page-layout">
+                    <div class="profile-card">
+                        <div class="avatar-large" id="profile-avatar">U</div>
+                        <h2 id="profile-nickname">User123</h2>
+                        <p class="text-muted">Изучаю историю и программирование</p>
+                    </div>
+                    <div class="profile-stats-detailed">
+                        <h3>Общая статистика</h3>
+                        <div class="stats-grid-large">
+                            <div class="stat-box-large"><span class="stat-val-large">12</span><span class="stat-lbl">Квизов создано</span></div>
+                            <div class="stat-box-large"><span class="stat-val-large">4ч</span><span class="stat-lbl">Время в квизах</span></div>
+                            <div class="stat-box-large"><span class="stat-val-large">5</span><span class="stat-lbl">Дней подряд</span></div>
+                            <div class="stat-box-large"><span class="stat-val-large">85%</span><span class="stat-lbl">Успех</span></div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- НАСТРОЙКИ -->
+    <div id="screen-settings" class="screen">
+        <header class="navbar">
+            <button class="back-btn" onclick="navigate('profile')">← Назад</button>
+            <div class="logo">Настройки</div>
+        </header>
+        <div class="settings-container">
+            <h2>Профиль</h2>
+            <div class="input-group"><label>Никнейм</label><input type="text" value="User123"></div>
+            <button class="primary-btn mt-20">Сохранить</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
