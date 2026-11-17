@@ -28,7 +28,7 @@ def clean_ocr_text(ocr_text: str) -> str:
             "Content-Type": "application/json",
         },
         data=json.dumps({
-            "model": "openrouter/free",
+            "model": "dots-studio/dots-3-note-preview:free",
             "messages": [
                 {
                     "role": "system",
@@ -47,7 +47,7 @@ def clean_ocr_text(ocr_text: str) -> str:
                         "«Продолжение следует».\n"
                         "\n"
                         "РАЗРЕШЕНО:\n"
-                        "- исправлять очевидные OCR-опечатки;\n"
+                        "- исправлять очевидные OCR-опечатки (в том числе в формулах);\n"
                         "- восстанавливать пробелы;\n"
                         "- восстанавливать переносы строк;\n"
                         "- объединять слова, очевидно разделённые переносом;\n"
@@ -55,7 +55,7 @@ def clean_ocr_text(ocr_text: str) -> str:
                         "\n"
                         "Если формула распознана неоднозначно — оставь её как есть.\n"
                         "\n"
-                        "Верни только исправленный текст."
+                        "Верни только исправленный текст. Без комментариев."
                     ),
                 },
                 {
@@ -70,8 +70,5 @@ def clean_ocr_text(ocr_text: str) -> str:
     return response.json()["choices"][0]["message"]["content"]
 
 
-# Use examples:
-test_file = ocr_space_file(filename="testfiles/OCR_TEST_1.png",language='rus')
-print("OCR Закончен")
-print(clean_ocr_text("".join(test_file)))
-
+def OCR_API(file_path: str):
+    clean_ocr_text("".join(ocr_space_file(filename=file_path,language='rus')))
